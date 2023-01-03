@@ -1,0 +1,3492 @@
+#jar.rib - my first jar try
+Display "finalScenePicture.tiff" "it" "rgba"
+Format 1920 1080 1.0
+Projection "perspective" "uniform float fov" [25]
+
+# HOW TO TRACE SPECULAR DEPTH??????
+Hider "raytrace" "int incremental" [1]
+PixelVariance 0.005
+Integrator "PxrUnified" "integrator"
+###Integrator "PxrVCM" "integrator" #should I rather use PxrVCM???
+#PixelVariance 0.01  IDK WHAT ANY OF IT DOES!!!!
+DepthOfField 1.8 0.500 11
+
+WorldBegin
+	#move everything back 3 units	
+	Translate 0 0 12 #12
+	#Rotate -20 1 0 0 #- to see bottom
+	Rotate -20 0 1 0 #- to see other side
+
+	AttributeBegin
+		TransformBegin
+			Translate 0 20 0
+			Rotate -90 1 0 0
+			Scale -1 1 1
+
+			Light "PxrDomeLight" "theLight" "float exposure" [0] "string lightColorMap" ["myRoom.tx"]
+		TransformEnd
+	AttributeEnd
+
+    #Bxdf "PXRSurface" "tryOne" "color diffuseColor" [ 0.8 0.1 0.1] 
+
+
+	# Table or something
+
+	TransformBegin
+		Rotate -90 1 0 0
+		#Translate -10 -10 -1.5
+        Translate 0 0 -1.5
+		AttributeBegin
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0.8 0.3 0.1]
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [1 1 1]
+
+            Disk 0 20 360
+			#Polygon "P" [0 0 0 
+			#			20 0 0 
+			#			20 20 0 
+			#			0 20 0]
+		AttributeEnd
+	TransformEnd
+
+
+
+	#WHOLE JAR
+	TransformBegin
+	
+
+		#JAR BODY
+		AttributeBegin 
+			#######Bxdf "LamaDielectric" "glassShader" "color reflectionTint" [0 0 1] "int fresnelMode" [1] 
+			Bxdf "PxrSurface" "translucentShader" "int diffuseDoubleSided" [2] "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "int thinGlass" [0]
+			
+			# the normal whole glass
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [0]
+			# try PAINT
+
+			#Pattern "PxrFractal" "pasted__PxrFractal4" "float frequency" [0.868085] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [1.54299998] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1]  "float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+			#Pattern "PxrFractal" "pasted__PxrFractal5" "float frequency" [2.48723412] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1] 
+			#	"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+			#Pattern "PxrVoronoise" "pasted__PxrVoronoise4" "float filter" [1] "float frequency" [1.29999995] "float jitter" [0] "color colorOffset" [0 0 0] "int octaves" [6] "int matchCppPattern" [0] "float lacunarity" [2] "float gain" [0.5] "int surfacePosition" [0] "int turbulent" [0] "color colorScale" [1 1 1] 
+			#	"float floatScale" [1] "float floatOffset" [0] "float smoothness" [1] "int betterContrast" [0] "float smoothnessOffset" [0] "int smoothnessOffsetWrap" [0]
+			#Pattern "PxrFractal" "pasted__PxrFractal6" "float frequency" [1.08297873] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [7] "float dimension" [0.992907822] 
+			#	"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+			#Pattern "PxrBlend" "pasted__PxrBlend3" "int clampOutput" [1] "int operation" [20] "reference color topRGB" ["pasted__PxrFractal5:resultRGB"] "float topA" [1] "color bottomRGB" [0 0.330300003 1] "float bottomA" [1]
+			#Pattern "PxrThreshold" "pasted__PxrThreshold2" "int invert" [0] "reference color inputRGB" ["pasted__PxrFractal4:resultRGB"] "float threshold" [0.496732026] "int channel" [3] "float transitionWidth" [0.0898692831] "int transitionProfile" [1]
+			#Pattern "PxrBlend" "pasted__PxrBlend4" "int clampOutput" [1] "int operation" [2] "reference color topRGB" ["pasted__PxrFractal6:resultRGB"] "float topA" [1] "color bottomRGB" [0.513000011 0.109453022 0.0564300083] "float bottomA" [1]
+			#Pattern "PxrBump" "pasted__PxrBump4" "int disable" [0] "string filename" [""] "float blur" [0] "int firstChannel" [0] "int atlasStyle" [0] "int invertT" [1] "int lerp" [1] "int mipBias" [0] "float maxResolution" [0] "float adjustAmount" [1] "float surfaceNormalMix" [0] "int reverse" [0] "float scale" [0.300000012] "reference float inputBump" ["pasted__PxrVoronoise4:resultF"] "normal inputN" [1 0 0]
+			#Pattern "PxrLayer" "pasted__LayerRust1" "int enableDiffuseAlways" [1] "int enableDiffuse" [1] "float diffuseGain" [0] "reference color diffuseColor" ["pasted__PxrBlend4:resultRGB"] "float diffuseRoughness" [0.24060151] "normal diffuseBumpNormal" [0 0 0] "color diffuseBackColor" [0.180000007 0.180000007 0.180000007] "float diffuseTransmitGain" [0] "color diffuseTransmitColor" [0.180000007 0.180000007 0.180000007] 
+			#	"int enableSpecular" [1] "float specularGain" [1] "color specularFaceColor" [0.0150375944 0.0150375944 0.0150375944] "color specularEdgeColor" [0 0 0] "color specularIor" [1.5 1.5 1.5] "color specularExtinctionCoeff" [0 0 0] 
+			#	"float specularRoughness" [0.646616518] "float specularAnisotropy" [0] "normal specularBumpNormal" [0 0 0] "int enableRoughSpecular" [0] "float roughSpecularGain" [0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] 
+			#	"color roughSpecularIor" [1.5 1.5 1.5] "color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "int enableClearcoat" [0] "float clearcoatGain" [0] 
+			#	"color clearcoatFaceColor" [0 0 0] "color clearcoatEdgeColor" [0 0 0] "color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] 
+			#	"float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] "float clearcoatThickness" [0] "color clearcoatAbsorptionTint" [0 0 0] "int enableIridescence" [0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] 
+			#	"color iridescenceSecondaryColor" [0 0 1] "float iridescenceThickness" [800] "float iridescenceRoughness" [0.200000003] "int enableFuzz" [0] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] 
+			#	"int enableSubsurface" [0] "float subsurfaceGain" [0] "color subsurfaceColor" [0.829999983 0.791000009 0.753000021] "float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] 
+			#	"float shortSubsurfaceDmfp" [5] "float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] "float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "int enableSinglescatter" [0] "float singlescatterGain" [0] 
+			#	"color singlescatterColor" [0.829999983 0.791000009 0.753000021] "float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] "float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] 
+			#	"int enableRR" [1] "float rrRefractionGain" [1] "float rrReflectionGain" [1] "color rrRefractionColor" [1 1 1] "float rrRoughness" [0.0052910056] "float rrRefractionRoughness" [-0.849624038] "float rrIor" [1.5] "int enableGlow" [0] "float glowGain" [0] "color glowColor" [1 1 1] 
+			#	"int enableInterior" [0] "color ssAlbedo" [0 0 0] "color extinction" [0 0 0] "normal bumpNormal" [0 0 0]
+			#Pattern "PxrLayer" "pasted__LayerPaint1" "int enableDiffuseAlways" [1] "int enableDiffuse" [1] "float diffuseGain" [1] "reference color diffuseColor" ["pasted__PxrBlend3:resultRGB"] "float diffuseRoughness" [0.105263159] "normal diffuseBumpNormal" [0 0 0] "color diffuseBackColor" [0.180000007 0.180000007 0.180000007] "float diffuseTransmitGain" [0] "color diffuseTransmitColor" [0.180000007 0.180000007 0.180000007] 
+			#	"int enableSpecular" [1] "float specularGain" [1] "reference color specularFaceColor" ["pasted__PxrVoronoise4:resultRGB"] "color specularEdgeColor" [0.0827067643 0.0827067643 0.0827067643] "color specularIor" [1.5 1.5 1.5] "color specularExtinctionCoeff" [0 0 0] "float specularRoughness" [0.586466193] 
+			#	"float specularAnisotropy" [0] "normal specularBumpNormal" [0 0 0] "int enableRoughSpecular" [0] "float roughSpecularGain" [0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] "color roughSpecularIor" [1.5 1.5 1.5] 
+			#	"color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "int enableClearcoat" [0] "float clearcoatGain" [0] "color clearcoatFaceColor" [0 0 0] 
+			#	"color clearcoatEdgeColor" [0 0 0] "color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] "float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] 
+			#	"float clearcoatThickness" [0] "color clearcoatAbsorptionTint" [0 0 0] "int enableIridescence" [0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] "color iridescenceSecondaryColor" [0 0 1] 
+			#	"float iridescenceThickness" [800] "float iridescenceRoughness" [0.200000003] "int enableFuzz" [0] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] "int enableSubsurface" [0] "float subsurfaceGain" [0] 
+			#	"color subsurfaceColor" [0.829999983 0.791000009 0.753000021] "float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] "float shortSubsurfaceDmfp" [5] 
+			#	"float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] "float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "int enableSinglescatter" [0] "float singlescatterGain" [0] "color singlescatterColor" [0.829999983 0.791000009 0.753000021] 
+			#	"float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] "float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] "int enableRR" [0] "float rrRefractionGain" [0] 
+			#	"float rrReflectionGain" [0] "color rrRefractionColor" [1 1 1] "float rrRoughness" [0.100000001] "float rrRefractionRoughness" [-1] "float rrIor" [1.5] "int enableGlow" [0] "float glowGain" [0] "color glowColor" [1 1 1] "int enableInterior" [0] 
+			#	"color ssAlbedo" [0 0 0] "color extinction" [0 0 0] "reference normal bumpNormal" ["pasted__PxrBump4:resultN"]
+			#Pattern "PxrInvert" "pasted__PxrInvert4" "reference color inputRGB" ["pasted__PxrThreshold2:resultRGB"] "int colorModel" [0] "int invertChannel0" [1] "int invertChannel1" [1] "int invertChannel2" [1]
+			#Pattern "PxrLayerMixer" "pasted__PxrLayerMixer3" "int enableDiffuseAlways" [1] "int layer1Enabled" [1] "reference float layer1Mask" ["pasted__PxrThreshold2:resultR"] "int layer2Enabled" [1] "reference float layer2Mask" ["pasted__PxrInvert4:resultR"] "int layer3Enabled" [0] "float layer3Mask" [1] "int layer4Enabled" [0] "float layer4Mask" [1] "normal baselayer_bumpNormal" [0 0 0] "int baselayer_enableDiffuse" [0] "float baselayer_diffuseGain" [0] "color baselayer_diffuseColor" [0 0 0] 
+			#	"float baselayer_diffuseRoughness" [0] "normal baselayer_diffuseBumpNormal" [0 0 0] "color baselayer_diffuseBackColor" [0 0 0] "float baselayer_diffuseTransmitGain" [0] "color baselayer_diffuseTransmitColor" [0 0 0] "int baselayer_enableSpecular" [0] "color baselayer_specularFaceColor" [0 0 0] 
+			#	"color baselayer_specularEdgeColor" [0 0 0] "color baselayer_specularIor" [0 0 0] "color baselayer_specularExtinctionCoeff" [0 0 0] "float baselayer_specularRoughness" [0.200000003] "float baselayer_specularAnisotropy" [0] "normal baselayer_specularBumpNormal" [0 0 0] 
+			#	"int baselayer_enableRoughSpecular" [0] "color baselayer_roughSpecularFaceColor" [0 0 0] "color baselayer_roughSpecularEdgeColor" [0 0 0] "color baselayer_roughSpecularIor" [0 0 0] "color baselayer_roughSpecularExtinctionCoeff" [0 0 0] 
+			#	"float baselayer_roughSpecularRoughness" [0.600000024] "float baselayer_roughSpecularAnisotropy" [0] "normal baselayer_roughSpecularBumpNormal" [0 0 0] "int baselayer_enableClearcoat" [0] "color baselayer_clearcoatFaceColor" [0 0 0] "color baselayer_clearcoatEdgeColor" [0 0 0] "color baselayer_clearcoatIor" [0 0 0] 
+			#	"color baselayer_clearcoatExtinctionCoeff" [0 0 0] "float baselayer_clearcoatRoughness" [0] "float baselayer_clearcoatAnisotropy" [0] "normal baselayer_clearcoatBumpNormal" [0 0 0] "float baselayer_clearcoatThickness" [0] "color baselayer_clearcoatAbsorptionTint" [0 0 0] 
+			#	"int baselayer_enableIridescence" [0] "float baselayer_iridescenceFaceGain" [0] "float baselayer_iridescenceEdgeGain" [0] "color baselayer_iridescencePrimaryColor" [0 0 0] "color baselayer_iridescenceSecondaryColor" [0 0 0] "float baselayer_iridescenceThickness" [0] "float baselayer_iridescenceRoughness" [0.200000003] "int baselayer_enableFuzz" [0] "float baselayer_fuzzGain" [0] 
+			#	"color baselayer_fuzzColor" [0 0 0] "float baselayer_fuzzConeAngle" [0] "normal baselayer_fuzzBumpNormal" [0 0 0] "int baselayer_enableRR" [0] "float baselayer_refractionGain" [0] "color baselayer_refractionColor" [1 1 1] "float baselayer_reflectionGain" [0] 
+			#	"float baselayer_glassRoughness" [0.100000001] "float baselayer_glassRefractionRoughness" [-1] "float baselayer_glassIor" [1.5] "int baselayer_enableSubsurface" [0] "float baselayer_subsurfaceGain" [0] "color baselayer_subsurfaceColor" [0 0 0] "float baselayer_subsurfaceDmfp" [1] "color baselayer_subsurfaceDmfpColor" [1 1 1] "float baselayer_shortSubsurfaceGain" [0] 
+			#	"color baselayer_shortSubsurfaceColor" [0 0 0] "float baselayer_shortSubsurfaceDmfp" [1] "float baselayer_longSubsurfaceGain" [0] "color baselayer_longSubsurfaceColor" [0 0 0] "float baselayer_longSubsurfaceDmfp" [1] "float baselayer_subsurfaceDirectionality" [0] "color baselayer_subsurfacePostTint" [1 1 1] 
+			#	"float baselayer_subsurfaceTransmitGain" [0] "int baselayer_enableSinglescatter" [0] "float baselayer_singlescatterGain" [0] "color baselayer_singlescatterColor" [0 0 0] "float baselayer_singlescatterMfp" [1] "color baselayer_singlescatterMfpColor" [1 1 1] "float baselayer_singlescatterDirectionality" [0] "float baselayer_singlescatterIor" [0] "float baselayer_singlescatterBlur" [0] 
+			#	"float baselayer_singlescatterDirectGain" [0] "color baselayer_singlescatterDirectGainTint" [1 1 1] "int baselayer_enableGlow" [0] "float baselayer_glowGain" [0] "color baselayer_glowColor" [0 0 0] "int baselayer_enableInterior" [0] "color baselayer_ssAlbedo" [0 0 0] 
+			#	"color baselayer_extinction" [0 0 0] "normal layer1_bumpNormal" [0 0 0] "int layer1_enableDiffuse" [1] "reference float layer1_diffuseGain" ["pasted__LayerRust1:pxrMaterialOut_diffuseGain"] "reference color layer1_diffuseColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseColor"] "reference float layer1_diffuseRoughness" ["pasted__LayerRust1:pxrMaterialOut_diffuseRoughness"] "normal layer1_diffuseBumpNormal" [0 0 0] "reference color layer1_diffuseBackColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseBackColor"] "reference float layer1_diffuseTransmitGain" ["pasted__LayerRust1:pxrMaterialOut_diffuseTransmitGain"] 
+			#	"reference color layer1_diffuseTransmitColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseTransmitColor"] "int layer1_enableSpecular" [1] "reference color layer1_specularFaceColor" ["pasted__LayerRust1:pxrMaterialOut_specularFaceColor"] "reference color layer1_specularEdgeColor" ["pasted__LayerRust1:pxrMaterialOut_specularEdgeColor"] "reference color layer1_specularIor" ["pasted__LayerRust1:pxrMaterialOut_specularIor"] "reference color layer1_specularExtinctionCoeff" ["pasted__LayerRust1:pxrMaterialOut_specularExtinctionCoeff"] "reference float layer1_specularRoughness" ["pasted__LayerRust1:pxrMaterialOut_specularRoughness"] "reference float layer1_specularAnisotropy" ["pasted__LayerRust1:pxrMaterialOut_specularAnisotropy"] "normal layer1_specularBumpNormal" [0 0 0] "int layer1_enableRoughSpecular" [0] "color layer1_roughSpecularFaceColor" [0 0 0] "color layer1_roughSpecularEdgeColor" [0 0 0] 
+			#	"color layer1_roughSpecularIor" [0 0 0] "color layer1_roughSpecularExtinctionCoeff" [0 0 0] "float layer1_roughSpecularRoughness" [0.600000024] "float layer1_roughSpecularAnisotropy" [0] "normal layer1_roughSpecularBumpNormal" [0 0 0] "int layer1_enableClearcoat" [0] "color layer1_clearcoatFaceColor" [0 0 0] 
+			#	"color layer1_clearcoatEdgeColor" [0 0 0] "color layer1_clearcoatIor" [0 0 0] "color layer1_clearcoatExtinctionCoeff" [0 0 0] "float layer1_clearcoatRoughness" [0] "float layer1_clearcoatAnisotropy" [0] "normal layer1_clearcoatBumpNormal" [0 0 0] 
+			#	"float layer1_clearcoatThickness" [0] "color layer1_clearcoatAbsorptionTint" [0 0 0] "int layer1_enableIridescence" [0] "float layer1_iridescenceFaceGain" [0] "float layer1_iridescenceEdgeGain" [0] "color layer1_iridescencePrimaryColor" [0 0 0] "color layer1_iridescenceSecondaryColor" [0 0 0] 
+			#	"float layer1_iridescenceThickness" [0] "float layer1_iridescenceRoughness" [0.200000003] "int layer1_enableFuzz" [0] "float layer1_fuzzGain" [0] "color layer1_fuzzColor" [0 0 0] "float layer1_fuzzConeAngle" [0] "normal layer1_fuzzBumpNormal" [0 0 0] "int layer1_enableRR" [1] "reference float layer1_refractionGain" ["pasted__LayerRust1:pxrMaterialOut_refractionGain"] "reference color layer1_refractionColor" ["pasted__LayerRust1:pxrMaterialOut_refractionColor"] 
+			#	"reference float layer1_reflectionGain" ["pasted__LayerRust1:pxrMaterialOut_reflectionGain"] "reference float layer1_glassRoughness" ["pasted__LayerRust1:pxrMaterialOut_glassRoughness"] "reference float layer1_glassRefractionRoughness" ["pasted__LayerRust1:pxrMaterialOut_glassRefractionRoughness"] "reference float layer1_glassIor" ["pasted__LayerRust1:pxrMaterialOut_glassIor"] "int layer1_enableSubsurface" [0] "float layer1_subsurfaceGain" [0] "color layer1_subsurfaceColor" [0 0 0] "float layer1_subsurfaceDmfp" [1] "color layer1_subsurfaceDmfpColor" [1 1 1] "float layer1_shortSubsurfaceGain" [0] "color layer1_shortSubsurfaceColor" [0 0 0] 
+			#	"float layer1_shortSubsurfaceDmfp" [1] "float layer1_longSubsurfaceGain" [0] "color layer1_longSubsurfaceColor" [0 0 0] "float layer1_longSubsurfaceDmfp" [1] "float layer1_subsurfaceDirectionality" [0] "color layer1_subsurfacePostTint" [1 1 1] "float layer1_subsurfaceTransmitGain" [0] "int layer1_enableSinglescatter" [0] "float layer1_singlescatterGain" [0] 
+			#	"color layer1_singlescatterColor" [0 0 0] "float layer1_singlescatterMfp" [1] "color layer1_singlescatterMfpColor" [1 1 1] "float layer1_singlescatterDirectionality" [0] "float layer1_singlescatterIor" [0] "float layer1_singlescatterBlur" [0] "float layer1_singlescatterDirectGain" [0] "color layer1_singlescatterDirectGainTint" [1 1 1] 
+			#	"int layer1_enableGlow" [0] "float layer1_glowGain" [0] "color layer1_glowColor" [0 0 0] "int layer1_enableInterior" [0] "color layer1_ssAlbedo" [0 0 0] "color layer1_extinction" [0 0 0] "reference normal layer2_bumpNormal" ["pasted__LayerPaint1:pxrMaterialOut_bumpNormal"] "int layer2_enableDiffuse" [1] 
+			#	"reference float layer2_diffuseGain" ["pasted__LayerPaint1:pxrMaterialOut_diffuseGain"] "reference color layer2_diffuseColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseColor"] "reference float layer2_diffuseRoughness" ["pasted__LayerPaint1:pxrMaterialOut_diffuseRoughness"] "normal layer2_diffuseBumpNormal" [0 0 0] "reference color layer2_diffuseBackColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseBackColor"] "reference float layer2_diffuseTransmitGain" ["pasted__LayerPaint1:pxrMaterialOut_diffuseTransmitGain"] "reference color layer2_diffuseTransmitColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseTransmitColor"] "int layer2_enableSpecular" [1] "reference color layer2_specularFaceColor" ["pasted__LayerPaint1:pxrMaterialOut_specularFaceColor"] "reference color layer2_specularEdgeColor" ["pasted__LayerPaint1:pxrMaterialOut_specularEdgeColor"] "reference color layer2_specularIor" ["pasted__LayerPaint1:pxrMaterialOut_specularIor"] "reference color layer2_specularExtinctionCoeff" ["pasted__LayerPaint1:pxrMaterialOut_specularExtinctionCoeff"] "reference float layer2_specularRoughness" ["pasted__LayerPaint1:pxrMaterialOut_specularRoughness"] "reference float layer2_specularAnisotropy" ["pasted__LayerPaint1:pxrMaterialOut_specularAnisotropy"] "normal layer2_specularBumpNormal" [0 0 0] 
+			#	"int layer2_enableRoughSpecular" [0] "color layer2_roughSpecularFaceColor" [0 0 0] "color layer2_roughSpecularEdgeColor" [0 0 0] "color layer2_roughSpecularIor" [0 0 0] "color layer2_roughSpecularExtinctionCoeff" [0 0 0] 
+			#	"float layer2_roughSpecularRoughness" [0.600000024] "float layer2_roughSpecularAnisotropy" [0] "normal layer2_roughSpecularBumpNormal" [0 0 0] "int layer2_enableClearcoat" [0] "color layer2_clearcoatFaceColor" [0 0 0] "color layer2_clearcoatEdgeColor" [0 0 0] "color layer2_clearcoatIor" [0 0 0] 
+			#	"color layer2_clearcoatExtinctionCoeff" [0 0 0] "float layer2_clearcoatRoughness" [0] "float layer2_clearcoatAnisotropy" [0] "normal layer2_clearcoatBumpNormal" [0 0 0] "float layer2_clearcoatThickness" [0] "color layer2_clearcoatAbsorptionTint" [0 0 0] 
+			#	"int layer2_enableIridescence" [0] "float layer2_iridescenceFaceGain" [0] "float layer2_iridescenceEdgeGain" [0] "color layer2_iridescencePrimaryColor" [0 0 0] "color layer2_iridescenceSecondaryColor" [0 0 0] "float layer2_iridescenceThickness" [0] "float layer2_iridescenceRoughness" [0.200000003] "int layer2_enableFuzz" [0] "float layer2_fuzzGain" [0] 
+			#	"color layer2_fuzzColor" [0 0 0] "float layer2_fuzzConeAngle" [0] "normal layer2_fuzzBumpNormal" [0 0 0] "int layer2_enableRR" [0] "float layer2_refractionGain" [0] "color layer2_refractionColor" [1 1 1] "float layer2_reflectionGain" [0] 
+			#	"float layer2_glassRoughness" [0.100000001] "float layer2_glassRefractionRoughness" [-1] "float layer2_glassIor" [1.5] "int layer2_enableSubsurface" [0] "float layer2_subsurfaceGain" [0] "color layer2_subsurfaceColor" [0 0 0] "float layer2_subsurfaceDmfp" [1] "color layer2_subsurfaceDmfpColor" [1 1 1] "float layer2_shortSubsurfaceGain" [0] 
+			#	"color layer2_shortSubsurfaceColor" [0 0 0] "float layer2_shortSubsurfaceDmfp" [1] "float layer2_longSubsurfaceGain" [0] "color layer2_longSubsurfaceColor" [0 0 0] "float layer2_longSubsurfaceDmfp" [1] "float layer2_subsurfaceDirectionality" [0] "color layer2_subsurfacePostTint" [1 1 1] 
+			#	"float layer2_subsurfaceTransmitGain" [0] "int layer2_enableSinglescatter" [0] "float layer2_singlescatterGain" [0] "color layer2_singlescatterColor" [0 0 0] "float layer2_singlescatterMfp" [1] "color layer2_singlescatterMfpColor" [1 1 1] "float layer2_singlescatterDirectionality" [0] "float layer2_singlescatterIor" [0] "float layer2_singlescatterBlur" [0] 
+			#	"float layer2_singlescatterDirectGain" [0] "color layer2_singlescatterDirectGainTint" [1 1 1] "int layer2_enableGlow" [0] "float layer2_glowGain" [0] "color layer2_glowColor" [0 0 0] "int layer2_enableInterior" [0] "color layer2_ssAlbedo" [0 0 0] 
+			#	"color layer2_extinction" [0 0 0] "normal layer3_bumpNormal" [0 0 0] "int layer3_enableDiffuse" [0] "float layer3_diffuseGain" [0] "color layer3_diffuseColor" [0 0 0] "float layer3_diffuseRoughness" [0] "normal layer3_diffuseBumpNormal" [0 0 0] 
+			#	"color layer3_diffuseBackColor" [0 0 0] "float layer3_diffuseTransmitGain" [0] "color layer3_diffuseTransmitColor" [0 0 0] "int layer3_enableSpecular" [0] "color layer3_specularFaceColor" [0 0 0] "color layer3_specularEdgeColor" [0 0 0] 
+			#	"color layer3_specularIor" [0 0 0] "color layer3_specularExtinctionCoeff" [0 0 0] "float layer3_specularRoughness" [0.200000003] "float layer3_specularAnisotropy" [0] "normal layer3_specularBumpNormal" [0 0 0] "int layer3_enableRoughSpecular" [0] "color layer3_roughSpecularFaceColor" [0 0 0] 
+			#	"color layer3_roughSpecularEdgeColor" [0 0 0] "color layer3_roughSpecularIor" [0 0 0] "color layer3_roughSpecularExtinctionCoeff" [0 0 0] "float layer3_roughSpecularRoughness" [0.600000024] "float layer3_roughSpecularAnisotropy" [0] "normal layer3_roughSpecularBumpNormal" [0 0 0] 
+			#	"int layer3_enableClearcoat" [0] "color layer3_clearcoatFaceColor" [0 0 0] "color layer3_clearcoatEdgeColor" [0 0 0] "color layer3_clearcoatIor" [0 0 0] "color layer3_clearcoatExtinctionCoeff" [0 0 0] 
+			#	"float layer3_clearcoatRoughness" [0] "float layer3_clearcoatAnisotropy" [0] "normal layer3_clearcoatBumpNormal" [0 0 0] "float layer3_clearcoatThickness" [0] "color layer3_clearcoatAbsorptionTint" [0 0 0] "int layer3_enableIridescence" [0] "float layer3_iridescenceFaceGain" [0] "float layer3_iridescenceEdgeGain" [0] "color layer3_iridescencePrimaryColor" [0 0 0] 
+			#	"color layer3_iridescenceSecondaryColor" [0 0 0] "float layer3_iridescenceThickness" [0] "float layer3_iridescenceRoughness" [0.200000003] "int layer3_enableFuzz" [0] "float layer3_fuzzGain" [0] "color layer3_fuzzColor" [0 0 0] "float layer3_fuzzConeAngle" [0] "normal layer3_fuzzBumpNormal" [0 0 0] 
+			#	"int layer3_enableRR" [0] "float layer3_refractionGain" [0] "color layer3_refractionColor" [1 1 1] "float layer3_reflectionGain" [0] "float layer3_glassRoughness" [0.100000001] "float layer3_glassRefractionRoughness" [-1] "float layer3_glassIor" [1.5] "int layer3_enableSubsurface" [0] "float layer3_subsurfaceGain" [0] "color layer3_subsurfaceColor" [0 0 0] 
+			#	"float layer3_subsurfaceDmfp" [1] "color layer3_subsurfaceDmfpColor" [1 1 1] "float layer3_shortSubsurfaceGain" [0] "color layer3_shortSubsurfaceColor" [0 0 0] "float layer3_shortSubsurfaceDmfp" [1] "float layer3_longSubsurfaceGain" [0] "color layer3_longSubsurfaceColor" [0 0 0] 
+			#	"float layer3_longSubsurfaceDmfp" [1] "float layer3_subsurfaceDirectionality" [0] "color layer3_subsurfacePostTint" [1 1 1] "float layer3_subsurfaceTransmitGain" [0] "int layer3_enableSinglescatter" [0] "float layer3_singlescatterGain" [0] "color layer3_singlescatterColor" [0 0 0] "float layer3_singlescatterMfp" [1] "color layer3_singlescatterMfpColor" [1 1 1] 
+			#	"float layer3_singlescatterDirectionality" [0] "float layer3_singlescatterIor" [0] "float layer3_singlescatterBlur" [0] "float layer3_singlescatterDirectGain" [0] "color layer3_singlescatterDirectGainTint" [1 1 1] "int layer3_enableGlow" [0] "float layer3_glowGain" [0] "color layer3_glowColor" [0 0 0] "int layer3_enableInterior" [0] 
+			#	"color layer3_ssAlbedo" [0 0 0] "color layer3_extinction" [0 0 0] "normal layer4_bumpNormal" [0 0 0] "int layer4_enableDiffuse" [0] "float layer4_diffuseGain" [0] "color layer4_diffuseColor" [0 0 0] 
+			#	"float layer4_diffuseRoughness" [0] "normal layer4_diffuseBumpNormal" [0 0 0] "color layer4_diffuseBackColor" [0 0 0] "float layer4_diffuseTransmitGain" [0] "color layer4_diffuseTransmitColor" [0 0 0] "int layer4_enableSpecular" [0] "color layer4_specularFaceColor" [0 0 0] 
+			#	"color layer4_specularEdgeColor" [0 0 0] "color layer4_specularIor" [0 0 0] "color layer4_specularExtinctionCoeff" [0 0 0] "float layer4_specularRoughness" [0.200000003] "float layer4_specularAnisotropy" [0] "normal layer4_specularBumpNormal" [0 0 0] 
+			#	"int layer4_enableRoughSpecular" [0] "color layer4_roughSpecularFaceColor" [0 0 0] "color layer4_roughSpecularEdgeColor" [0 0 0] "color layer4_roughSpecularIor" [0 0 0] "color layer4_roughSpecularExtinctionCoeff" [0 0 0] 
+			#	"float layer4_roughSpecularRoughness" [0.600000024] "float layer4_roughSpecularAnisotropy" [0] "normal layer4_roughSpecularBumpNormal" [0 0 0] "int layer4_enableClearcoat" [0] "color layer4_clearcoatFaceColor" [0 0 0] "color layer4_clearcoatEdgeColor" [0 0 0] "color layer4_clearcoatIor" [0 0 0] 
+			#	"color layer4_clearcoatExtinctionCoeff" [0 0 0] "float layer4_clearcoatRoughness" [0] "float layer4_clearcoatAnisotropy" [0] "normal layer4_clearcoatBumpNormal" [0 0 0] "float layer4_clearcoatThickness" [0] "color layer4_clearcoatAbsorptionTint" [0 0 0] 
+			#	"int layer4_enableIridescence" [0] "float layer4_iridescenceFaceGain" [0] "float layer4_iridescenceEdgeGain" [0] "color layer4_iridescencePrimaryColor" [0 0 0] "color layer4_iridescenceSecondaryColor" [0 0 0] "float layer4_iridescenceThickness" [0] "float layer4_iridescenceRoughness" [0.200000003] "int layer4_enableFuzz" [0] "float layer4_fuzzGain" [0] 
+			#	"color layer4_fuzzColor" [0 0 0] "float layer4_fuzzConeAngle" [0] "normal layer4_fuzzBumpNormal" [0 0 0] "int layer4_enableRR" [0] "float layer4_refractionGain" [0] "color layer4_refractionColor" [1 1 1] "float layer4_reflectionGain" [0] 
+			#	"float layer4_glassRoughness" [0.100000001] "float layer4_glassRefractionRoughness" [-1] "float layer4_glassIor" [1.5] "int layer4_enableSubsurface" [0] "float layer4_subsurfaceGain" [0] "color layer4_subsurfaceColor" [0 0 0] "float layer4_subsurfaceDmfp" [1] "color layer4_subsurfaceDmfpColor" [1 1 1] "float layer4_shortSubsurfaceGain" [0] 
+			#	"color layer4_shortSubsurfaceColor" [0 0 0] "float layer4_shortSubsurfaceDmfp" [1] "float layer4_longSubsurfaceGain" [0] "color layer4_longSubsurfaceColor" [0 0 0] "float layer4_longSubsurfaceDmfp" [1] "float layer4_subsurfaceDirectionality" [0] "color layer4_subsurfacePostTint" [1 1 1] 
+			#	"float layer4_subsurfaceTransmitGain" [0] "int layer4_enableSinglescatter" [0] "float layer4_singlescatterGain" [0] "color layer4_singlescatterColor" [0 0 0] "float layer4_singlescatterMfp" [1] "color layer4_singlescatterMfpColor" [1 1 1] "float layer4_singlescatterDirectionality" [0] "float layer4_singlescatterIor" [0] "float layer4_singlescatterBlur" [0] 
+			#	"float layer4_singlescatterDirectGain" [0] "color layer4_singlescatterDirectGainTint" [1 1 1] "int layer4_enableGlow" [0] "float layer4_glowGain" [0] "color layer4_glowColor" [0 0 0] "int layer4_enableInterior" [0] "color layer4_ssAlbedo" [0 0 0] 
+			#	"color layer4_extinction" [0 0 0]
+			#Bxdf "PxrLayerSurface" "GlassPaintPxrLayerSurface_PATTY1" "reference float presence" ["pasted__PxrThreshold2:resultR"] "int shadowBumpTerminator" [0] "float blend" [0] "color shadowColor" [0 0 0] "reference float diffuseGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseGain"] "reference color diffuseColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseColor"] "reference float diffuseRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseRoughness"] "normal diffuseBumpNormal" [0 0 0] "reference color diffuseBackColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseBackColor"] "reference float diffuseTransmitGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseTransmitGain"] "reference color diffuseTransmitColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseTransmitColor"] "reference color specularFaceColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularFaceColor"] "reference color specularEdgeColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularEdgeColor"] 
+			#	"reference color specularIor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularIor"] "reference color specularExtinctionCoeff" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularExtinctionCoeff"] "reference float specularRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularRoughness"] "reference float specularAnisotropy" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularAnisotropy"] "normal specularBumpNormal" [0 0 0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] "color roughSpecularIor" [1.5 1.5 1.5] 
+			#	"color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "color clearcoatFaceColor" [0 0 0] "color clearcoatEdgeColor" [0 0 0] 
+			#	"color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] "float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] "float clearcoatThickness" [0] 
+			#	"color clearcoatAbsorptionTint" [0 0 0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] "color iridescenceSecondaryColor" [0 0 1] "float iridescenceThickness" [800] 
+			#	"float iridescenceRoughness" [0.200000003] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] "float subsurfaceGain" [0] "color subsurfaceColor" [0.829999983 0.791000009 0.753000021] 
+			#	"float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] "float shortSubsurfaceDmfp" [5] "float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] 
+			#	"float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "float singlescatterGain" [0] "color singlescatterColor" [0.829999983 0.791000009 0.753000021] "float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] 
+			#	"float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] "float glowGain" [0] "color glowColor" [1 1 1] "color ssAlbedo" [0 0 0] 
+			#	"color extinction" [0 0 0] "reference normal bumpNormal" ["pasted__PxrLayerMixer3:pxrMaterialOut_bumpNormal"] "reference float refractionGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_refractionGain"] "reference color refractionColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_refractionColor"] "reference float reflectionGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_reflectionGain"] "reference float glassRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_glassRoughness"] "reference float glassIor" ["pasted__PxrLayerMixer3:pxrMaterialOut_glassIor"] "float diffuseExponent" [1] "int diffuseDoubleSided" [1] "int diffuseBackUseDiffuseColor" [1] "int specularFresnelMode" [0] "float specularFresnelShape" [5] "int specularModelType" [0] "vector specularAnisotropyDirection" [0 0 0] 
+			#	"int specularDoubleSided" [0] "int roughSpecularFresnelMode" [0] "float roughSpecularFresnelShape" [5] "int roughSpecularModelType" [0] "vector roughSpecularAnisotropyDirection" [0 0 0] "int roughSpecularDoubleSided" [0] "int clearcoatFresnelMode" [0] "float clearcoatFresnelShape" [5] "int clearcoatModelType" [0] "vector clearcoatAnisotropyDirection" [0 0 0] "int clearcoatDoubleSided" [0] "float specularEnergyCompensation" [1] 
+			#	"float clearcoatEnergyCompensation" [1] "float iridescenceFresnelShape" [5] "int iridescenceMode" [0] "float iridescenceCurve" [1] "float iridescenceScale" [1] "int iridescenceFlip" [0] "int iridescenceDoubleSided" [0] "int fuzzDoubleSided" [0] "int subsurfaceType" [0] "float subsurfaceBleed" [0] "float subsurfaceDiffuseBlend" [0] "int subsurfaceResolveSelfIntersections" [0] "float subsurfaceIor" [1.39999998] "float subsurfaceDiffuseSwitch" [1] "int subsurfaceDoubleSided" [0] "int considerBackside" [1] 
+			#	"int continuationRayMode" [0] "int maxContinuationHits" [2] "float followTopology" [0] "string subsurfaceSubset" [""] "int singlescatterDoubleSided" [0] "int singlescatterConsiderBackside" [1] "int singlescatterContinuationRayMode" [0] "int singlescatterMaxContinuationHits" [2] "int singlescatterDirectGainMode" [0] "string singlescatterSubset" [""] "color irradianceTint" [1 1 1] "float irradianceRoughness" [0] "float unitLength" [0.100000001] "int mwWalkable" [0] "float mwIor" [-1] 
+			#	"int thinGlass" [0] "int ignoreFresnel" [0] "int ignoreAccumOpacity" [0] "float g0" [0] "float g1" [0] "int multiScatter" [0] "int enableOverlappingVolumes" [0] "int shadowMode" [0] "int presenceCached" [1] "int mwStartable" [0] "float roughnessMollificationClamp" [32] "color userColor" [0 0 0] "int[1] utilityPattern" [0] "string __materialid" ["dab615d6-debf-11ec-94f1-0242a59e0aa7:pasted__PxrLayerSurface2SG"]
+			#Pattern "PxrFractal" "pasted__PxrFractal6" "float frequency" [1.08297873] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [7] "float dimension" [0.992907822] 
+			#	"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+			#Pattern "PxrFractal" "pasted__PxrFractal4" "float frequency" [2.768085] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2.54299998] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1] 
+			#	"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+			#Pattern "PxrVoronoise" "pasted__PxrVoronoise4" "float filter" [1] "float frequency" [1.29999995] "float jitter" [0] "color colorOffset" [0 0 0] "int octaves" [6] "int matchCppPattern" [0] "float lacunarity" [2] "float gain" [0.5] "int surfacePosition" [0] "int turbulent" [0] "color colorScale" [1 1 1] 
+			#	"float floatScale" [1] "float floatOffset" [0] "float smoothness" [1] "int betterContrast" [0] "float smoothnessOffset" [0] "int smoothnessOffsetWrap" [0]
+			#Pattern "PxrThreshold" "pasted__PxrThreshold2" "int invert" [0] "reference color inputRGB" ["pasted__PxrFractal4:resultRGB"] "float threshold" [0.496732026] "int channel" [3] "float transitionWidth" [0.0898692831] "int transitionProfile" [1]
+			#Pattern "PxrInvert" "pasted__PxrInvert4" "reference color inputRGB" ["pasted__PxrThreshold2:resultRGB"] "int colorModel" [0] "int invertChannel0" [1] "int invertChannel1" [1] "int invertChannel2" [1]
+			#Pattern "PxrDispScalarLayer" "pasted__PxrDispScalarLayer1" "float overallAmount" [1] "int baseLayerEnabled" [1] "float baseLayerAmount" [1] "float baseLayerDispScalar" [0] "int layer1Enabled" [1] "float layer1Amount" [0.150000006] "reference float layer1DispScalar" ["pasted__PxrFractal6:resultF"] "reference float layer1Mask" ["pasted__PxrInvert4:resultR"] "int layer1Comp" [1] "int layer2Enabled" [1] "reference float layer2Amount" ["pasted__PxrVoronoise4:resultF"] "float layer2DispScalar" [0.200000003] "reference float layer2Mask" ["pasted__PxrThreshold2:resultR"] "int layer2Comp" [1] "int layer3Enabled" [0] "float layer3Amount" [1] "float layer3DispScalar" [0] 
+			#	"float layer3Mask" [1] "int layer3Comp" [1] "int layer4Enabled" [0] "float layer4Amount" [1] "float layer4DispScalar" [0] "float layer4Mask" [1] "int layer4Comp" [1]
+			#Displace "PxrDisplace" "pasted__PxrDisplace1" "reference float dispScalar" ["pasted__PxrDispScalarLayer1:resultF"] "vector dispVector" [0 0 0] "int enabled" [0] "float dispAmount" [1] "vector modelDispVector" [0 0 0] "string __materialid" ["dab615d6-debf-11ec-94f1-0242a59e0aa7:pasted__PxrLayerSurface2SG"]
+
+
+
+
+			# end of try Paint
+
+			TransformBegin
+				#main body middle
+				Rotate -90 1 0 0
+				Cylinder 1 -1 1 360
+				#Disk -1 1 360
+				
+			TransformEnd
+			
+			#BOTTOM
+
+			TransformBegin
+				#bottom of main body
+				Translate 0 -1 0
+				Rotate 90 1 0 0
+				Torus 0.55 0.45 0 55 360
+			TransformEnd
+
+			TransformBegin
+				#bottom of main body bottom of the bottom
+				Translate 0 -1.32 0
+				Scale 1 0.35 1
+				Rotate 90 1 0 0
+				Torus 0.55 0.3 5 65 360
+			TransformEnd
+
+			TransformBegin
+				#bottom ring
+				Translate 0 -1.4 0
+				Rotate 90 1 0 0
+				Torus 0.65 0.06 0 180 360
+			TransformEnd
+
+			TransformBegin
+				#bottom bottom bottom sphere
+				Translate 0 -1.64 0
+				Scale 1 0.5 1
+				Rotate -90 1 0 0
+				Sphere 0.8 0.5 1 -360
+			TransformEnd
+
+			#TOP
+
+			TransformBegin
+				#round top of main body
+				Translate 0 1 0
+				Rotate -90 1 0 0
+				Torus 0.8 0.2 0 45 360
+			TransformEnd
+			
+
+			TransformBegin
+				#top of main body the indent thingy
+				Translate 0 1.275 0
+				Rotate -90 1 0 0
+				Torus 1 0.15 -115 -180 360
+			TransformEnd
+
+
+
+			TransformBegin
+				#the swirly cylinder thingy - BASE
+				Translate 0 1.4 0
+				Rotate -90 1 0 0
+				Cylinder 0.85 -0.15 0.29 360
+			TransformEnd
+
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.32 0
+				Rotate 90 1 0 0
+				Torus 0.85 0.04 -90 90 360
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				#Rotate 10 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				Rotate 90 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 180 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 270 0 0 10.1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit ends parabololololoid
+				Translate -0.285 1.42 -0.825
+				Rotate -90 1 0 0
+				Rotate 90 0 1 0
+				Rotate -6 0 1 0
+				Rotate -5 1 0 0
+				Paraboloid 0.05 0 0.3 180
+			TransformEnd
+
+			TransformBegin
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.42 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				#Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+			#######################################################################
+			#TORUS inside outside
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.68 0
+				Rotate -90 1 0 0
+				Torus 0.78625 0.06375 0 180 360
+			TransformEnd
+
+			#######################################################################
+
+				
+			# INSIDE JAR GLASS
+
+		
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.85 0.94 0.85 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+
+				TransformBegin
+					#the swirly cylinder thingy - BASE
+					Translate 0 1.4 0
+					Rotate -90 1 0 0
+					Cylinder 0.85 -0.159 0.2958 360
+				TransformEnd
+
+
+			TransformEnd	
+			
+
+
+		AttributeEnd
+
+		###########################################################
+		# OUTSIDE DIRT LAYER
+		AttributeBegin
+			TransformBegin
+				Scale 1.001 1.001 1.001
+
+				Pattern "PxrTexture" "dirtTexture" "string filename" "ColourDirtMap2.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "dirtAlpha" "string filename" "WhiteDirtMap2.tx"
+				Bxdf "PxrSurface" "dirtLayer" "reference color diffuseColor"  ['dirtTexture:resultRGB'] "reference float presence"  ['dirtAlpha:resultR'] 
+				
+				TransformBegin
+					TransformBegin
+						#main body middle
+						Rotate -90 1 0 0
+						Cylinder 1 -1 1 360
+						#Disk -1 1 360
+						
+					TransformEnd
+					
+					#BOTTOM
+
+					TransformBegin
+						#bottom of main body
+						Translate 0 -1 0
+						Rotate 90 1 0 0
+						Torus 0.55 0.45 0 55 360
+					TransformEnd
+
+					TransformBegin
+						#bottom of main body bottom of the bottom
+						Translate 0 -1.32 0
+						Scale 1 0.35 1
+						Rotate 90 1 0 0
+						Torus 0.55 0.3 5 65 360
+					TransformEnd
+
+					TransformBegin
+						#bottom ring
+						Translate 0 -1.4 0
+						Rotate 90 1 0 0
+						Torus 0.65 0.06 0 180 360
+					TransformEnd
+
+					TransformBegin
+						#bottom bottom bottom sphere
+						Translate 0 -1.64 0
+						Scale 1 0.5 1
+						Rotate -90 1 0 0
+						Sphere 0.8 0.5 1 -360
+					TransformEnd
+
+					#TOP
+
+					TransformBegin
+						#round top of main body
+						Translate 0 1 0
+						Rotate -90 1 0 0
+						Torus 0.8 0.2 0 45 360
+					TransformEnd
+					
+
+					TransformBegin
+						#top of main body the indent thingy
+						Translate 0 1.275 0
+						Rotate -90 1 0 0
+						Torus 1 0.15 -115 -180 360
+					TransformEnd
+
+
+
+					TransformBegin
+						#the swirly cylinder thingy - BASE
+						Translate 0 1.4 0
+						Rotate -90 1 0 0
+						Cylinder 0.85 -0.15 0.29 360
+					TransformEnd
+
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.32 0
+						Rotate 90 1 0 0
+						Torus 0.85 0.04 -90 90 360
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						#Rotate 10 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						Rotate 90 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 180 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 270 0 0 10.1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit ends parabololololoid
+						Translate -0.285 1.42 -0.825
+						Rotate -90 1 0 0
+						Rotate 90 0 1 0
+						Rotate -6 0 1 0
+						Rotate -5 1 0 0
+						Paraboloid 0.05 0 0.3 180
+					TransformEnd
+
+					TransformBegin
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.42 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						#Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+					#######################################################################
+					#TORUS inside outside
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.68 0
+						Rotate -90 1 0 0
+						Torus 0.78625 0.06375 0 180 360
+					TransformEnd
+				TransformEnd
+			TransformEnd	
+				
+		AttributeEnd
+
+		###########################################################
+		#LABEL
+
+		TransformBegin
+			Scale 1.001 1.001 1.001
+			Rotate -90 1 0 0
+			AttributeBegin
+				#Bxdf "PxrDiffuse" "diffuseLabel" "color diffuseColor" [0.9 0.9 0.9]
+				#Pattern "PxrManifold2D" "stretchyBit" "float scaleS" [2]
+				Pattern "PxrTexture" "labelTexture" "string filename" "UltramarineLayerStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "labelAlpha" "string filename" "transparencyMap.tx"
+				Bxdf "PxrSurface" "texturedLabel" "reference color diffuseColor"  ['labelTexture:resultRGB'] "reference float presence"  ['labelAlpha:resultR']
+				Cylinder 1 -1 1 200
+			AttributeEnd
+		TransformEnd
+
+		############################################################
+
+		
+		# INSIDE JAR PAINT
+
+		AttributeBegin
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			
+			#MAYA NOISE
+		#	Pattern "PxrFractal" "pasted__PxrFractal4" "float frequency" [0.868085] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [1.54299998] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1]  "float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrFractal" "pasted__PxrFractal5" "float frequency" [2.48723412] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrVoronoise" "pasted__PxrVoronoise4" "float filter" [1] "float frequency" [1.29999995] "float jitter" [0] "color colorOffset" [0 0 0] "int octaves" [6] "int matchCppPattern" [0] "float lacunarity" [2] "float gain" [0.5] "int surfacePosition" [0] "int turbulent" [0] "color colorScale" [1 1 1] 
+		#		"float floatScale" [1] "float floatOffset" [0] "float smoothness" [1] "int betterContrast" [0] "float smoothnessOffset" [0] "int smoothnessOffsetWrap" [0]
+		#	Pattern "PxrFractal" "pasted__PxrFractal6" "float frequency" [1.08297873] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [7] "float dimension" [0.992907822] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrBlend" "pasted__PxrBlend3" "int clampOutput" [1] "int operation" [20] "reference color topRGB" ["pasted__PxrFractal5:resultRGB"] "float topA" [1] "color bottomRGB" [0 0.330300003 1] "float bottomA" [1]
+		#	Pattern "PxrThreshold" "pasted__PxrThreshold2" "int invert" [0] "reference color inputRGB" ["pasted__PxrFractal4:resultRGB"] "float threshold" [0.496732026] "int channel" [3] "float transitionWidth" [0.0898692831] "int transitionProfile" [1]
+		#	Pattern "PxrBlend" "pasted__PxrBlend4" "int clampOutput" [1] "int operation" [2] "reference color topRGB" ["pasted__PxrFractal6:resultRGB"] "float topA" [1] "color bottomRGB" [0.513000011 0.109453022 0.0564300083] "float bottomA" [1]
+		#	Pattern "PxrBump" "pasted__PxrBump4" "int disable" [0] "string filename" [""] "float blur" [0] "int firstChannel" [0] "int atlasStyle" [0] "int invertT" [1] "int lerp" [1] "int mipBias" [0] "float maxResolution" [0] "float adjustAmount" [1] "float surfaceNormalMix" [0] "int reverse" [0] "float scale" [0.300000012] "reference float inputBump" ["pasted__PxrVoronoise4:resultF"] "normal inputN" [1 0 0]
+		#	Pattern "PxrLayer" "pasted__LayerRust1" "int enableDiffuseAlways" [1] "int enableDiffuse" [1] "float diffuseGain" [0] "reference color diffuseColor" ["pasted__PxrBlend4:resultRGB"] "float diffuseRoughness" [0.24060151] "normal diffuseBumpNormal" [0 0 0] "color diffuseBackColor" [0.180000007 0.180000007 0.180000007] "float diffuseTransmitGain" [0] "color diffuseTransmitColor" [0.180000007 0.180000007 0.180000007] 
+		#		"int enableSpecular" [1] "float specularGain" [1] "color specularFaceColor" [0.0150375944 0.0150375944 0.0150375944] "color specularEdgeColor" [0 0 0] "color specularIor" [1.5 1.5 1.5] "color specularExtinctionCoeff" [0 0 0] 
+		#		"float specularRoughness" [0.646616518] "float specularAnisotropy" [0] "normal specularBumpNormal" [0 0 0] "int enableRoughSpecular" [0] "float roughSpecularGain" [0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] 
+		#		"color roughSpecularIor" [1.5 1.5 1.5] "color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "int enableClearcoat" [0] "float clearcoatGain" [0] 
+		#		"color clearcoatFaceColor" [0 0 0] "color clearcoatEdgeColor" [0 0 0] "color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] 
+		#		"float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] "float clearcoatThickness" [0] "color clearcoatAbsorptionTint" [0 0 0] "int enableIridescence" [0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] 
+		#		"color iridescenceSecondaryColor" [0 0 1] "float iridescenceThickness" [800] "float iridescenceRoughness" [0.200000003] "int enableFuzz" [0] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] 
+		#		"int enableSubsurface" [0] "float subsurfaceGain" [0] "color subsurfaceColor" [0.829999983 0.791000009 0.753000021] "float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] 
+		#		"float shortSubsurfaceDmfp" [5] "float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] "float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "int enableSinglescatter" [0] "float singlescatterGain" [0] 
+		#		"color singlescatterColor" [0.829999983 0.791000009 0.753000021] "float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] "float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] 
+		#		"int enableRR" [1] "float rrRefractionGain" [1] "float rrReflectionGain" [1] "color rrRefractionColor" [1 1 1] "float rrRoughness" [0.0052910056] "float rrRefractionRoughness" [-0.849624038] "float rrIor" [1.5] "int enableGlow" [0] "float glowGain" [0] "color glowColor" [1 1 1] 
+		#		"int enableInterior" [0] "color ssAlbedo" [0 0 0] "color extinction" [0 0 0] "normal bumpNormal" [0 0 0]
+		#	Pattern "PxrLayer" "pasted__LayerPaint1" "int enableDiffuseAlways" [1] "int enableDiffuse" [1] "float diffuseGain" [1] "reference color diffuseColor" ["pasted__PxrBlend3:resultRGB"] "float diffuseRoughness" [0.105263159] "normal diffuseBumpNormal" [0 0 0] "color diffuseBackColor" [0.180000007 0.180000007 0.180000007] "float diffuseTransmitGain" [0] "color diffuseTransmitColor" [0.180000007 0.180000007 0.180000007] 
+		#		"int enableSpecular" [1] "float specularGain" [1] "reference color specularFaceColor" ["pasted__PxrVoronoise4:resultRGB"] "color specularEdgeColor" [0.0827067643 0.0827067643 0.0827067643] "color specularIor" [1.5 1.5 1.5] "color specularExtinctionCoeff" [0 0 0] "float specularRoughness" [0.586466193] 
+		#		"float specularAnisotropy" [0] "normal specularBumpNormal" [0 0 0] "int enableRoughSpecular" [0] "float roughSpecularGain" [0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] "color roughSpecularIor" [1.5 1.5 1.5] 
+		#		"color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "int enableClearcoat" [0] "float clearcoatGain" [0] "color clearcoatFaceColor" [0 0 0] 
+		#		"color clearcoatEdgeColor" [0 0 0] "color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] "float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] 
+		#		"float clearcoatThickness" [0] "color clearcoatAbsorptionTint" [0 0 0] "int enableIridescence" [0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] "color iridescenceSecondaryColor" [0 0 1] 
+		#		"float iridescenceThickness" [800] "float iridescenceRoughness" [0.200000003] "int enableFuzz" [0] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] "int enableSubsurface" [0] "float subsurfaceGain" [0] 
+		#		"color subsurfaceColor" [0.829999983 0.791000009 0.753000021] "float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] "float shortSubsurfaceDmfp" [5] 
+		#		"float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] "float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "int enableSinglescatter" [0] "float singlescatterGain" [0] "color singlescatterColor" [0.829999983 0.791000009 0.753000021] 
+		#		"float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] "float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] "int enableRR" [0] "float rrRefractionGain" [0] 
+		#		"float rrReflectionGain" [0] "color rrRefractionColor" [1 1 1] "float rrRoughness" [0.100000001] "float rrRefractionRoughness" [-1] "float rrIor" [1.5] "int enableGlow" [0] "float glowGain" [0] "color glowColor" [1 1 1] "int enableInterior" [0] 
+		#		"color ssAlbedo" [0 0 0] "color extinction" [0 0 0] "reference normal bumpNormal" ["pasted__PxrBump4:resultN"]
+		#	Pattern "PxrInvert" "pasted__PxrInvert4" "reference color inputRGB" ["pasted__PxrThreshold2:resultRGB"] "int colorModel" [0] "int invertChannel0" [1] "int invertChannel1" [1] "int invertChannel2" [1]
+		#	Pattern "PxrLayerMixer" "pasted__PxrLayerMixer3" "int enableDiffuseAlways" [1] "int layer1Enabled" [1] "reference float layer1Mask" ["pasted__PxrThreshold2:resultR"] "int layer2Enabled" [1] "reference float layer2Mask" ["pasted__PxrInvert4:resultR"] "int layer3Enabled" [0] "float layer3Mask" [1] "int layer4Enabled" [0] "float layer4Mask" [1] "normal baselayer_bumpNormal" [0 0 0] "int baselayer_enableDiffuse" [0] "float baselayer_diffuseGain" [0] "color baselayer_diffuseColor" [0 0 0] 
+		#		"float baselayer_diffuseRoughness" [0] "normal baselayer_diffuseBumpNormal" [0 0 0] "color baselayer_diffuseBackColor" [0 0 0] "float baselayer_diffuseTransmitGain" [0] "color baselayer_diffuseTransmitColor" [0 0 0] "int baselayer_enableSpecular" [0] "color baselayer_specularFaceColor" [0 0 0] 
+		#		"color baselayer_specularEdgeColor" [0 0 0] "color baselayer_specularIor" [0 0 0] "color baselayer_specularExtinctionCoeff" [0 0 0] "float baselayer_specularRoughness" [0.200000003] "float baselayer_specularAnisotropy" [0] "normal baselayer_specularBumpNormal" [0 0 0] 
+		#		"int baselayer_enableRoughSpecular" [0] "color baselayer_roughSpecularFaceColor" [0 0 0] "color baselayer_roughSpecularEdgeColor" [0 0 0] "color baselayer_roughSpecularIor" [0 0 0] "color baselayer_roughSpecularExtinctionCoeff" [0 0 0] 
+		#		"float baselayer_roughSpecularRoughness" [0.600000024] "float baselayer_roughSpecularAnisotropy" [0] "normal baselayer_roughSpecularBumpNormal" [0 0 0] "int baselayer_enableClearcoat" [0] "color baselayer_clearcoatFaceColor" [0 0 0] "color baselayer_clearcoatEdgeColor" [0 0 0] "color baselayer_clearcoatIor" [0 0 0] 
+		#		"color baselayer_clearcoatExtinctionCoeff" [0 0 0] "float baselayer_clearcoatRoughness" [0] "float baselayer_clearcoatAnisotropy" [0] "normal baselayer_clearcoatBumpNormal" [0 0 0] "float baselayer_clearcoatThickness" [0] "color baselayer_clearcoatAbsorptionTint" [0 0 0] 
+		#		"int baselayer_enableIridescence" [0] "float baselayer_iridescenceFaceGain" [0] "float baselayer_iridescenceEdgeGain" [0] "color baselayer_iridescencePrimaryColor" [0 0 0] "color baselayer_iridescenceSecondaryColor" [0 0 0] "float baselayer_iridescenceThickness" [0] "float baselayer_iridescenceRoughness" [0.200000003] "int baselayer_enableFuzz" [0] "float baselayer_fuzzGain" [0] 
+		#		"color baselayer_fuzzColor" [0 0 0] "float baselayer_fuzzConeAngle" [0] "normal baselayer_fuzzBumpNormal" [0 0 0] "int baselayer_enableRR" [0] "float baselayer_refractionGain" [0] "color baselayer_refractionColor" [1 1 1] "float baselayer_reflectionGain" [0] 
+		#		"float baselayer_glassRoughness" [0.100000001] "float baselayer_glassRefractionRoughness" [-1] "float baselayer_glassIor" [1.5] "int baselayer_enableSubsurface" [0] "float baselayer_subsurfaceGain" [0] "color baselayer_subsurfaceColor" [0 0 0] "float baselayer_subsurfaceDmfp" [1] "color baselayer_subsurfaceDmfpColor" [1 1 1] "float baselayer_shortSubsurfaceGain" [0] 
+		#		"color baselayer_shortSubsurfaceColor" [0 0 0] "float baselayer_shortSubsurfaceDmfp" [1] "float baselayer_longSubsurfaceGain" [0] "color baselayer_longSubsurfaceColor" [0 0 0] "float baselayer_longSubsurfaceDmfp" [1] "float baselayer_subsurfaceDirectionality" [0] "color baselayer_subsurfacePostTint" [1 1 1] 
+		#		"float baselayer_subsurfaceTransmitGain" [0] "int baselayer_enableSinglescatter" [0] "float baselayer_singlescatterGain" [0] "color baselayer_singlescatterColor" [0 0 0] "float baselayer_singlescatterMfp" [1] "color baselayer_singlescatterMfpColor" [1 1 1] "float baselayer_singlescatterDirectionality" [0] "float baselayer_singlescatterIor" [0] "float baselayer_singlescatterBlur" [0] 
+		#		"float baselayer_singlescatterDirectGain" [0] "color baselayer_singlescatterDirectGainTint" [1 1 1] "int baselayer_enableGlow" [0] "float baselayer_glowGain" [0] "color baselayer_glowColor" [0 0 0] "int baselayer_enableInterior" [0] "color baselayer_ssAlbedo" [0 0 0] 
+		#		"color baselayer_extinction" [0 0 0] "normal layer1_bumpNormal" [0 0 0] "int layer1_enableDiffuse" [1] "reference float layer1_diffuseGain" ["pasted__LayerRust1:pxrMaterialOut_diffuseGain"] "reference color layer1_diffuseColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseColor"] "reference float layer1_diffuseRoughness" ["pasted__LayerRust1:pxrMaterialOut_diffuseRoughness"] "normal layer1_diffuseBumpNormal" [0 0 0] "reference color layer1_diffuseBackColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseBackColor"] "reference float layer1_diffuseTransmitGain" ["pasted__LayerRust1:pxrMaterialOut_diffuseTransmitGain"] 
+		#		"reference color layer1_diffuseTransmitColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseTransmitColor"] "int layer1_enableSpecular" [1] "reference color layer1_specularFaceColor" ["pasted__LayerRust1:pxrMaterialOut_specularFaceColor"] "reference color layer1_specularEdgeColor" ["pasted__LayerRust1:pxrMaterialOut_specularEdgeColor"] "reference color layer1_specularIor" ["pasted__LayerRust1:pxrMaterialOut_specularIor"] "reference color layer1_specularExtinctionCoeff" ["pasted__LayerRust1:pxrMaterialOut_specularExtinctionCoeff"] "reference float layer1_specularRoughness" ["pasted__LayerRust1:pxrMaterialOut_specularRoughness"] "reference float layer1_specularAnisotropy" ["pasted__LayerRust1:pxrMaterialOut_specularAnisotropy"] "normal layer1_specularBumpNormal" [0 0 0] "int layer1_enableRoughSpecular" [0] "color layer1_roughSpecularFaceColor" [0 0 0] "color layer1_roughSpecularEdgeColor" [0 0 0] 
+		#		"color layer1_roughSpecularIor" [0 0 0] "color layer1_roughSpecularExtinctionCoeff" [0 0 0] "float layer1_roughSpecularRoughness" [0.600000024] "float layer1_roughSpecularAnisotropy" [0] "normal layer1_roughSpecularBumpNormal" [0 0 0] "int layer1_enableClearcoat" [0] "color layer1_clearcoatFaceColor" [0 0 0] 
+		#		"color layer1_clearcoatEdgeColor" [0 0 0] "color layer1_clearcoatIor" [0 0 0] "color layer1_clearcoatExtinctionCoeff" [0 0 0] "float layer1_clearcoatRoughness" [0] "float layer1_clearcoatAnisotropy" [0] "normal layer1_clearcoatBumpNormal" [0 0 0] 
+		#		"float layer1_clearcoatThickness" [0] "color layer1_clearcoatAbsorptionTint" [0 0 0] "int layer1_enableIridescence" [0] "float layer1_iridescenceFaceGain" [0] "float layer1_iridescenceEdgeGain" [0] "color layer1_iridescencePrimaryColor" [0 0 0] "color layer1_iridescenceSecondaryColor" [0 0 0] 
+		#		"float layer1_iridescenceThickness" [0] "float layer1_iridescenceRoughness" [0.200000003] "int layer1_enableFuzz" [0] "float layer1_fuzzGain" [0] "color layer1_fuzzColor" [0 0 0] "float layer1_fuzzConeAngle" [0] "normal layer1_fuzzBumpNormal" [0 0 0] "int layer1_enableRR" [1] "reference float layer1_refractionGain" ["pasted__LayerRust1:pxrMaterialOut_refractionGain"] "reference color layer1_refractionColor" ["pasted__LayerRust1:pxrMaterialOut_refractionColor"] 
+		#		"reference float layer1_reflectionGain" ["pasted__LayerRust1:pxrMaterialOut_reflectionGain"] "reference float layer1_glassRoughness" ["pasted__LayerRust1:pxrMaterialOut_glassRoughness"] "reference float layer1_glassRefractionRoughness" ["pasted__LayerRust1:pxrMaterialOut_glassRefractionRoughness"] "reference float layer1_glassIor" ["pasted__LayerRust1:pxrMaterialOut_glassIor"] "int layer1_enableSubsurface" [0] "float layer1_subsurfaceGain" [0] "color layer1_subsurfaceColor" [0 0 0] "float layer1_subsurfaceDmfp" [1] "color layer1_subsurfaceDmfpColor" [1 1 1] "float layer1_shortSubsurfaceGain" [0] "color layer1_shortSubsurfaceColor" [0 0 0] 
+		#		"float layer1_shortSubsurfaceDmfp" [1] "float layer1_longSubsurfaceGain" [0] "color layer1_longSubsurfaceColor" [0 0 0] "float layer1_longSubsurfaceDmfp" [1] "float layer1_subsurfaceDirectionality" [0] "color layer1_subsurfacePostTint" [1 1 1] "float layer1_subsurfaceTransmitGain" [0] "int layer1_enableSinglescatter" [0] "float layer1_singlescatterGain" [0] 
+		#		"color layer1_singlescatterColor" [0 0 0] "float layer1_singlescatterMfp" [1] "color layer1_singlescatterMfpColor" [1 1 1] "float layer1_singlescatterDirectionality" [0] "float layer1_singlescatterIor" [0] "float layer1_singlescatterBlur" [0] "float layer1_singlescatterDirectGain" [0] "color layer1_singlescatterDirectGainTint" [1 1 1] 
+		#		"int layer1_enableGlow" [0] "float layer1_glowGain" [0] "color layer1_glowColor" [0 0 0] "int layer1_enableInterior" [0] "color layer1_ssAlbedo" [0 0 0] "color layer1_extinction" [0 0 0] "reference normal layer2_bumpNormal" ["pasted__LayerPaint1:pxrMaterialOut_bumpNormal"] "int layer2_enableDiffuse" [1] 
+		#		"reference float layer2_diffuseGain" ["pasted__LayerPaint1:pxrMaterialOut_diffuseGain"] "reference color layer2_diffuseColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseColor"] "reference float layer2_diffuseRoughness" ["pasted__LayerPaint1:pxrMaterialOut_diffuseRoughness"] "normal layer2_diffuseBumpNormal" [0 0 0] "reference color layer2_diffuseBackColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseBackColor"] "reference float layer2_diffuseTransmitGain" ["pasted__LayerPaint1:pxrMaterialOut_diffuseTransmitGain"] "reference color layer2_diffuseTransmitColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseTransmitColor"] "int layer2_enableSpecular" [1] "reference color layer2_specularFaceColor" ["pasted__LayerPaint1:pxrMaterialOut_specularFaceColor"] "reference color layer2_specularEdgeColor" ["pasted__LayerPaint1:pxrMaterialOut_specularEdgeColor"] "reference color layer2_specularIor" ["pasted__LayerPaint1:pxrMaterialOut_specularIor"] "reference color layer2_specularExtinctionCoeff" ["pasted__LayerPaint1:pxrMaterialOut_specularExtinctionCoeff"] "reference float layer2_specularRoughness" ["pasted__LayerPaint1:pxrMaterialOut_specularRoughness"] "reference float layer2_specularAnisotropy" ["pasted__LayerPaint1:pxrMaterialOut_specularAnisotropy"] "normal layer2_specularBumpNormal" [0 0 0] 
+		#		"int layer2_enableRoughSpecular" [0] "color layer2_roughSpecularFaceColor" [0 0 0] "color layer2_roughSpecularEdgeColor" [0 0 0] "color layer2_roughSpecularIor" [0 0 0] "color layer2_roughSpecularExtinctionCoeff" [0 0 0] 
+		#		"float layer2_roughSpecularRoughness" [0.600000024] "float layer2_roughSpecularAnisotropy" [0] "normal layer2_roughSpecularBumpNormal" [0 0 0] "int layer2_enableClearcoat" [0] "color layer2_clearcoatFaceColor" [0 0 0] "color layer2_clearcoatEdgeColor" [0 0 0] "color layer2_clearcoatIor" [0 0 0] 
+		#		"color layer2_clearcoatExtinctionCoeff" [0 0 0] "float layer2_clearcoatRoughness" [0] "float layer2_clearcoatAnisotropy" [0] "normal layer2_clearcoatBumpNormal" [0 0 0] "float layer2_clearcoatThickness" [0] "color layer2_clearcoatAbsorptionTint" [0 0 0] 
+		#		"int layer2_enableIridescence" [0] "float layer2_iridescenceFaceGain" [0] "float layer2_iridescenceEdgeGain" [0] "color layer2_iridescencePrimaryColor" [0 0 0] "color layer2_iridescenceSecondaryColor" [0 0 0] "float layer2_iridescenceThickness" [0] "float layer2_iridescenceRoughness" [0.200000003] "int layer2_enableFuzz" [0] "float layer2_fuzzGain" [0] 
+		#		"color layer2_fuzzColor" [0 0 0] "float layer2_fuzzConeAngle" [0] "normal layer2_fuzzBumpNormal" [0 0 0] "int layer2_enableRR" [0] "float layer2_refractionGain" [0] "color layer2_refractionColor" [1 1 1] "float layer2_reflectionGain" [0] 
+		#		"float layer2_glassRoughness" [0.100000001] "float layer2_glassRefractionRoughness" [-1] "float layer2_glassIor" [1.5] "int layer2_enableSubsurface" [0] "float layer2_subsurfaceGain" [0] "color layer2_subsurfaceColor" [0 0 0] "float layer2_subsurfaceDmfp" [1] "color layer2_subsurfaceDmfpColor" [1 1 1] "float layer2_shortSubsurfaceGain" [0] 
+		#		"color layer2_shortSubsurfaceColor" [0 0 0] "float layer2_shortSubsurfaceDmfp" [1] "float layer2_longSubsurfaceGain" [0] "color layer2_longSubsurfaceColor" [0 0 0] "float layer2_longSubsurfaceDmfp" [1] "float layer2_subsurfaceDirectionality" [0] "color layer2_subsurfacePostTint" [1 1 1] 
+		#		"float layer2_subsurfaceTransmitGain" [0] "int layer2_enableSinglescatter" [0] "float layer2_singlescatterGain" [0] "color layer2_singlescatterColor" [0 0 0] "float layer2_singlescatterMfp" [1] "color layer2_singlescatterMfpColor" [1 1 1] "float layer2_singlescatterDirectionality" [0] "float layer2_singlescatterIor" [0] "float layer2_singlescatterBlur" [0] 
+		#		"float layer2_singlescatterDirectGain" [0] "color layer2_singlescatterDirectGainTint" [1 1 1] "int layer2_enableGlow" [0] "float layer2_glowGain" [0] "color layer2_glowColor" [0 0 0] "int layer2_enableInterior" [0] "color layer2_ssAlbedo" [0 0 0] 
+		#		"color layer2_extinction" [0 0 0] "normal layer3_bumpNormal" [0 0 0] "int layer3_enableDiffuse" [0] "float layer3_diffuseGain" [0] "color layer3_diffuseColor" [0 0 0] "float layer3_diffuseRoughness" [0] "normal layer3_diffuseBumpNormal" [0 0 0] 
+		#		"color layer3_diffuseBackColor" [0 0 0] "float layer3_diffuseTransmitGain" [0] "color layer3_diffuseTransmitColor" [0 0 0] "int layer3_enableSpecular" [0] "color layer3_specularFaceColor" [0 0 0] "color layer3_specularEdgeColor" [0 0 0] 
+		#		"color layer3_specularIor" [0 0 0] "color layer3_specularExtinctionCoeff" [0 0 0] "float layer3_specularRoughness" [0.200000003] "float layer3_specularAnisotropy" [0] "normal layer3_specularBumpNormal" [0 0 0] "int layer3_enableRoughSpecular" [0] "color layer3_roughSpecularFaceColor" [0 0 0] 
+		#		"color layer3_roughSpecularEdgeColor" [0 0 0] "color layer3_roughSpecularIor" [0 0 0] "color layer3_roughSpecularExtinctionCoeff" [0 0 0] "float layer3_roughSpecularRoughness" [0.600000024] "float layer3_roughSpecularAnisotropy" [0] "normal layer3_roughSpecularBumpNormal" [0 0 0] 
+		#		"int layer3_enableClearcoat" [0] "color layer3_clearcoatFaceColor" [0 0 0] "color layer3_clearcoatEdgeColor" [0 0 0] "color layer3_clearcoatIor" [0 0 0] "color layer3_clearcoatExtinctionCoeff" [0 0 0] 
+		#		"float layer3_clearcoatRoughness" [0] "float layer3_clearcoatAnisotropy" [0] "normal layer3_clearcoatBumpNormal" [0 0 0] "float layer3_clearcoatThickness" [0] "color layer3_clearcoatAbsorptionTint" [0 0 0] "int layer3_enableIridescence" [0] "float layer3_iridescenceFaceGain" [0] "float layer3_iridescenceEdgeGain" [0] "color layer3_iridescencePrimaryColor" [0 0 0] 
+		#		"color layer3_iridescenceSecondaryColor" [0 0 0] "float layer3_iridescenceThickness" [0] "float layer3_iridescenceRoughness" [0.200000003] "int layer3_enableFuzz" [0] "float layer3_fuzzGain" [0] "color layer3_fuzzColor" [0 0 0] "float layer3_fuzzConeAngle" [0] "normal layer3_fuzzBumpNormal" [0 0 0] 
+		#		"int layer3_enableRR" [0] "float layer3_refractionGain" [0] "color layer3_refractionColor" [1 1 1] "float layer3_reflectionGain" [0] "float layer3_glassRoughness" [0.100000001] "float layer3_glassRefractionRoughness" [-1] "float layer3_glassIor" [1.5] "int layer3_enableSubsurface" [0] "float layer3_subsurfaceGain" [0] "color layer3_subsurfaceColor" [0 0 0] 
+		#		"float layer3_subsurfaceDmfp" [1] "color layer3_subsurfaceDmfpColor" [1 1 1] "float layer3_shortSubsurfaceGain" [0] "color layer3_shortSubsurfaceColor" [0 0 0] "float layer3_shortSubsurfaceDmfp" [1] "float layer3_longSubsurfaceGain" [0] "color layer3_longSubsurfaceColor" [0 0 0] 
+		#		"float layer3_longSubsurfaceDmfp" [1] "float layer3_subsurfaceDirectionality" [0] "color layer3_subsurfacePostTint" [1 1 1] "float layer3_subsurfaceTransmitGain" [0] "int layer3_enableSinglescatter" [0] "float layer3_singlescatterGain" [0] "color layer3_singlescatterColor" [0 0 0] "float layer3_singlescatterMfp" [1] "color layer3_singlescatterMfpColor" [1 1 1] 
+		#		"float layer3_singlescatterDirectionality" [0] "float layer3_singlescatterIor" [0] "float layer3_singlescatterBlur" [0] "float layer3_singlescatterDirectGain" [0] "color layer3_singlescatterDirectGainTint" [1 1 1] "int layer3_enableGlow" [0] "float layer3_glowGain" [0] "color layer3_glowColor" [0 0 0] "int layer3_enableInterior" [0] 
+		#		"color layer3_ssAlbedo" [0 0 0] "color layer3_extinction" [0 0 0] "normal layer4_bumpNormal" [0 0 0] "int layer4_enableDiffuse" [0] "float layer4_diffuseGain" [0] "color layer4_diffuseColor" [0 0 0] 
+		#		"float layer4_diffuseRoughness" [0] "normal layer4_diffuseBumpNormal" [0 0 0] "color layer4_diffuseBackColor" [0 0 0] "float layer4_diffuseTransmitGain" [0] "color layer4_diffuseTransmitColor" [0 0 0] "int layer4_enableSpecular" [0] "color layer4_specularFaceColor" [0 0 0] 
+		#		"color layer4_specularEdgeColor" [0 0 0] "color layer4_specularIor" [0 0 0] "color layer4_specularExtinctionCoeff" [0 0 0] "float layer4_specularRoughness" [0.200000003] "float layer4_specularAnisotropy" [0] "normal layer4_specularBumpNormal" [0 0 0] 
+		#		"int layer4_enableRoughSpecular" [0] "color layer4_roughSpecularFaceColor" [0 0 0] "color layer4_roughSpecularEdgeColor" [0 0 0] "color layer4_roughSpecularIor" [0 0 0] "color layer4_roughSpecularExtinctionCoeff" [0 0 0] 
+		#		"float layer4_roughSpecularRoughness" [0.600000024] "float layer4_roughSpecularAnisotropy" [0] "normal layer4_roughSpecularBumpNormal" [0 0 0] "int layer4_enableClearcoat" [0] "color layer4_clearcoatFaceColor" [0 0 0] "color layer4_clearcoatEdgeColor" [0 0 0] "color layer4_clearcoatIor" [0 0 0] 
+		#		"color layer4_clearcoatExtinctionCoeff" [0 0 0] "float layer4_clearcoatRoughness" [0] "float layer4_clearcoatAnisotropy" [0] "normal layer4_clearcoatBumpNormal" [0 0 0] "float layer4_clearcoatThickness" [0] "color layer4_clearcoatAbsorptionTint" [0 0 0] 
+		#		"int layer4_enableIridescence" [0] "float layer4_iridescenceFaceGain" [0] "float layer4_iridescenceEdgeGain" [0] "color layer4_iridescencePrimaryColor" [0 0 0] "color layer4_iridescenceSecondaryColor" [0 0 0] "float layer4_iridescenceThickness" [0] "float layer4_iridescenceRoughness" [0.200000003] "int layer4_enableFuzz" [0] "float layer4_fuzzGain" [0] 
+		#		"color layer4_fuzzColor" [0 0 0] "float layer4_fuzzConeAngle" [0] "normal layer4_fuzzBumpNormal" [0 0 0] "int layer4_enableRR" [0] "float layer4_refractionGain" [0] "color layer4_refractionColor" [1 1 1] "float layer4_reflectionGain" [0] 
+		#		"float layer4_glassRoughness" [0.100000001] "float layer4_glassRefractionRoughness" [-1] "float layer4_glassIor" [1.5] "int layer4_enableSubsurface" [0] "float layer4_subsurfaceGain" [0] "color layer4_subsurfaceColor" [0 0 0] "float layer4_subsurfaceDmfp" [1] "color layer4_subsurfaceDmfpColor" [1 1 1] "float layer4_shortSubsurfaceGain" [0] 
+		#		"color layer4_shortSubsurfaceColor" [0 0 0] "float layer4_shortSubsurfaceDmfp" [1] "float layer4_longSubsurfaceGain" [0] "color layer4_longSubsurfaceColor" [0 0 0] "float layer4_longSubsurfaceDmfp" [1] "float layer4_subsurfaceDirectionality" [0] "color layer4_subsurfacePostTint" [1 1 1] 
+		#		"float layer4_subsurfaceTransmitGain" [0] "int layer4_enableSinglescatter" [0] "float layer4_singlescatterGain" [0] "color layer4_singlescatterColor" [0 0 0] "float layer4_singlescatterMfp" [1] "color layer4_singlescatterMfpColor" [1 1 1] "float layer4_singlescatterDirectionality" [0] "float layer4_singlescatterIor" [0] "float layer4_singlescatterBlur" [0] 
+		#		"float layer4_singlescatterDirectGain" [0] "color layer4_singlescatterDirectGainTint" [1 1 1] "int layer4_enableGlow" [0] "float layer4_glowGain" [0] "color layer4_glowColor" [0 0 0] "int layer4_enableInterior" [0] "color layer4_ssAlbedo" [0 0 0] 
+		#		"color layer4_extinction" [0 0 0]
+		#	Bxdf "PxrLayerSurface" "GlassPaintPxrLayerSurface_PATTY1" "reference float presence" ["pasted__PxrThreshold2:resultR"] "int shadowBumpTerminator" [0] "float blend" [0] "color shadowColor" [0 0 0] "reference float diffuseGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseGain"] "reference color diffuseColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseColor"] "reference float diffuseRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseRoughness"] "normal diffuseBumpNormal" [0 0 0] "reference color diffuseBackColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseBackColor"] "reference float diffuseTransmitGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseTransmitGain"] "reference color diffuseTransmitColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseTransmitColor"] "reference color specularFaceColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularFaceColor"] "reference color specularEdgeColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularEdgeColor"] 
+		#		"reference color specularIor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularIor"] "reference color specularExtinctionCoeff" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularExtinctionCoeff"] "reference float specularRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularRoughness"] "reference float specularAnisotropy" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularAnisotropy"] "normal specularBumpNormal" [0 0 0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] "color roughSpecularIor" [1.5 1.5 1.5] 
+		#		"color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "color clearcoatFaceColor" [0 0 0] "color clearcoatEdgeColor" [0 0 0] 
+		#		"color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] "float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] "float clearcoatThickness" [0] 
+		#		"color clearcoatAbsorptionTint" [0 0 0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] "color iridescenceSecondaryColor" [0 0 1] "float iridescenceThickness" [800] 
+		#		"float iridescenceRoughness" [0.200000003] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] "float subsurfaceGain" [0] "color subsurfaceColor" [0.829999983 0.791000009 0.753000021] 
+		#		"float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] "float shortSubsurfaceDmfp" [5] "float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] 
+		#		"float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "float singlescatterGain" [0] "color singlescatterColor" [0.829999983 0.791000009 0.753000021] "float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] 
+		#		"float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] "float glowGain" [0] "color glowColor" [1 1 1] "color ssAlbedo" [0 0 0] 
+		#		"color extinction" [0 0 0] "reference normal bumpNormal" ["pasted__PxrLayerMixer3:pxrMaterialOut_bumpNormal"] "reference float refractionGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_refractionGain"] "reference color refractionColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_refractionColor"] "reference float reflectionGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_reflectionGain"] "reference float glassRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_glassRoughness"] "reference float glassIor" ["pasted__PxrLayerMixer3:pxrMaterialOut_glassIor"] "float diffuseExponent" [1] "int diffuseDoubleSided" [1] "int diffuseBackUseDiffuseColor" [1] "int specularFresnelMode" [0] "float specularFresnelShape" [5] "int specularModelType" [0] "vector specularAnisotropyDirection" [0 0 0] 
+		#		"int specularDoubleSided" [0] "int roughSpecularFresnelMode" [0] "float roughSpecularFresnelShape" [5] "int roughSpecularModelType" [0] "vector roughSpecularAnisotropyDirection" [0 0 0] "int roughSpecularDoubleSided" [0] "int clearcoatFresnelMode" [0] "float clearcoatFresnelShape" [5] "int clearcoatModelType" [0] "vector clearcoatAnisotropyDirection" [0 0 0] "int clearcoatDoubleSided" [0] "float specularEnergyCompensation" [1] 
+		#		"float clearcoatEnergyCompensation" [1] "float iridescenceFresnelShape" [5] "int iridescenceMode" [0] "float iridescenceCurve" [1] "float iridescenceScale" [1] "int iridescenceFlip" [0] "int iridescenceDoubleSided" [0] "int fuzzDoubleSided" [0] "int subsurfaceType" [0] "float subsurfaceBleed" [0] "float subsurfaceDiffuseBlend" [0] "int subsurfaceResolveSelfIntersections" [0] "float subsurfaceIor" [1.39999998] "float subsurfaceDiffuseSwitch" [1] "int subsurfaceDoubleSided" [0] "int considerBackside" [1] 
+		#		"int continuationRayMode" [0] "int maxContinuationHits" [2] "float followTopology" [0] "string subsurfaceSubset" [""] "int singlescatterDoubleSided" [0] "int singlescatterConsiderBackside" [1] "int singlescatterContinuationRayMode" [0] "int singlescatterMaxContinuationHits" [2] "int singlescatterDirectGainMode" [0] "string singlescatterSubset" [""] "color irradianceTint" [1 1 1] "float irradianceRoughness" [0] "float unitLength" [0.100000001] "int mwWalkable" [0] "float mwIor" [-1] 
+		#		"int thinGlass" [0] "int ignoreFresnel" [0] "int ignoreAccumOpacity" [0] "float g0" [0] "float g1" [0] "int multiScatter" [0] "int enableOverlappingVolumes" [0] "int shadowMode" [0] "int presenceCached" [1] "int mwStartable" [0] "float roughnessMollificationClamp" [32] "color userColor" [0 0 0] "int[1] utilityPattern" [0] "string __materialid" ["dab615d6-debf-11ec-94f1-0242a59e0aa7:pasted__PxrLayerSurface2SG"]
+		#	Pattern "PxrFractal" "pasted__PxrFractal6" "float frequency" [1.08297873] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [7] "float dimension" [0.992907822] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrFractal" "pasted__PxrFractal4" "float frequency" [2.768085] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2.54299998] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrVoronoise" "pasted__PxrVoronoise4" "float filter" [1] "float frequency" [1.29999995] "float jitter" [0] "color colorOffset" [0 0 0] "int octaves" [6] "int matchCppPattern" [0] "float lacunarity" [2] "float gain" [0.5] "int surfacePosition" [0] "int turbulent" [0] "color colorScale" [1 1 1] 
+		#		"float floatScale" [1] "float floatOffset" [0] "float smoothness" [1] "int betterContrast" [0] "float smoothnessOffset" [0] "int smoothnessOffsetWrap" [0]
+		#	Pattern "PxrThreshold" "pasted__PxrThreshold2" "int invert" [0] "reference color inputRGB" ["pasted__PxrFractal4:resultRGB"] "float threshold" [0.496732026] "int channel" [3] "float transitionWidth" [0.0898692831] "int transitionProfile" [1]
+		#	Pattern "PxrInvert" "pasted__PxrInvert4" "reference color inputRGB" ["pasted__PxrThreshold2:resultRGB"] "int colorModel" [0] "int invertChannel0" [1] "int invertChannel1" [1] "int invertChannel2" [1]
+		#	Pattern "PxrDispScalarLayer" "pasted__PxrDispScalarLayer1" "float overallAmount" [1] "int baseLayerEnabled" [1] "float baseLayerAmount" [1] "float baseLayerDispScalar" [0] "int layer1Enabled" [1] "float layer1Amount" [0.150000006] "reference float layer1DispScalar" ["pasted__PxrFractal6:resultF"] "reference float layer1Mask" ["pasted__PxrInvert4:resultR"] "int layer1Comp" [1] "int layer2Enabled" [1] "reference float layer2Amount" ["pasted__PxrVoronoise4:resultF"] "float layer2DispScalar" [0.200000003] "reference float layer2Mask" ["pasted__PxrThreshold2:resultR"] "int layer2Comp" [1] "int layer3Enabled" [0] "float layer3Amount" [1] "float layer3DispScalar" [0] 
+		#		"float layer3Mask" [1] "int layer3Comp" [1] "int layer4Enabled" [0] "float layer4Amount" [1] "float layer4DispScalar" [0] "float layer4Mask" [1] "int layer4Comp" [1]
+		#	Displace "PxrDisplace" "pasted__PxrDisplace1" "reference float dispScalar" ["pasted__PxrDispScalarLayer1:resultF"] "vector dispVector" [0 0 0] "int enabled" [0] "float dispAmount" [1] "vector modelDispVector" [0 0 0] "string __materialid" ["dab615d6-debf-11ec-94f1-0242a59e0aa7:pasted__PxrLayerSurface2SG"]
+
+
+			#END OF MAYA NOISE
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			
+			
+			
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.84 0.93 0.84 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+				#TransformBegin
+				#	#Scale 1 0.2 1
+				#	#Translate 0 0.5 0
+
+				#	TransformBegin
+				#		#the swirly cylinder thingy - BASE
+				#		Translate 0 1.4 0
+				#		Rotate -90 1 0 0
+				#		Cylinder 0.85 -0.19 0.25 360
+				#	TransformEnd
+				#TransformEnd
+
+			TransformEnd
+
+		AttributeEnd	
+
+
+
+
+
+		###############################################################################
+
+		# LID
+		AttributeBegin
+			Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+
+			
+
+			TransformBegin
+			#general lid control
+				Translate 0 0.05 0
+				Scale 1 1.15 1
+
+				AttributeBegin
+					TransformBegin
+						#main body of the lid
+						Translate 0 1.35 0
+						Rotate -90 1 0 0
+						Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+						Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+						Cylinder 1 -0.1 0.1 360
+					TransformEnd
+				AttributeEnd
+
+				AttributeBegin
+					TransformBegin
+						#Disk top
+						#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+						#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+
+						Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+						Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+
+
+
+
+						Translate 0 1.46 0
+						Rotate -90 1 0 0 
+						
+						Disk 0 0.8 360
+					TransformEnd
+				AttributeEnd	
+				
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 0 65 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 115 180 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.51 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.1
+					Torus 0.8 0.1 65 115 360
+				TransformEnd
+
+				TransformBegin
+					#torus edge top 
+					Translate 0 1.45 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.3
+					Torus 0.9 0.1 0 90 360
+				TransformEnd
+
+				# Bottom torus edge
+
+				TransformBegin
+					#Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd	
+
+				TransformBegin
+					Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+
+				#########################################
+				# outwards bits
+				TransformBegin
+					#Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+			TransformEnd	
+		AttributeEnd	
+		#####################################################
+
+		###############################################################################
+
+		# LID 2
+
+		AttributeBegin
+			Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+
+			
+
+			TransformBegin
+			#general lid control
+				Translate 1.85 -2.86 -1.35
+				Scale 1 1.15 1
+
+				AttributeBegin
+					TransformBegin
+						#main body of the lid
+						Translate 0 1.35 0
+						Rotate -90 1 0 0
+						Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+						Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+						Cylinder 1 -0.1 0.1 360
+					TransformEnd
+				AttributeEnd
+
+				AttributeBegin
+					TransformBegin
+						#Disk top
+						#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+						#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+
+						Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+						Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+
+
+
+
+						Translate 0 1.46 0
+						Rotate -90 1 0 0 
+						
+						Disk 0 0.8 360
+					TransformEnd
+				AttributeEnd	
+				
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 0 65 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 115 180 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.51 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.1
+					Torus 0.8 0.1 65 115 360
+				TransformEnd
+
+				TransformBegin
+					#torus edge top 
+					Translate 0 1.45 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.3
+					Torus 0.9 0.1 0 90 360
+				TransformEnd
+
+				# Bottom torus edge
+
+				TransformBegin
+					#Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd	
+
+				TransformBegin
+					Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+
+				#########################################
+				# outwards bits
+				TransformBegin
+					#Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+			TransformEnd	
+		AttributeEnd	
+		#####################################################
+
+
+
+
+
+
+
+	TransformEnd
+
+    # JAR 2
+
+	TransformBegin
+        Translate -2 0 -0.6
+        Rotate 90 0 1 0
+
+		#JAR BODY
+		AttributeBegin 
+			#######Bxdf "LamaDielectric" "glassShader" "color reflectionTint" [0 0 1] "int fresnelMode" [1] 
+			Bxdf "PxrSurface" "translucentShader" "int diffuseDoubleSided" [2] "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "int thinGlass" [0]
+			
+			# the normal whole glass
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [0]
+			# try PAINT
+
+
+
+			# end of try Paint
+
+			TransformBegin
+				#main body middle
+				Rotate -90 1 0 0
+				Cylinder 1 -1 1 360
+				#Disk -1 1 360
+				
+			TransformEnd
+			
+			#BOTTOM
+
+			TransformBegin
+				#bottom of main body
+				Translate 0 -1 0
+				Rotate 90 1 0 0
+				Torus 0.55 0.45 0 55 360
+			TransformEnd
+
+			TransformBegin
+				#bottom of main body bottom of the bottom
+				Translate 0 -1.32 0
+				Scale 1 0.35 1
+				Rotate 90 1 0 0
+				Torus 0.55 0.3 5 65 360
+			TransformEnd
+
+			TransformBegin
+				#bottom ring
+				Translate 0 -1.4 0
+				Rotate 90 1 0 0
+				Torus 0.65 0.06 0 180 360
+			TransformEnd
+
+			TransformBegin
+				#bottom bottom bottom sphere
+				Translate 0 -1.64 0
+				Scale 1 0.5 1
+				Rotate -90 1 0 0
+				Sphere 0.8 0.5 1 -360
+			TransformEnd
+
+			#TOP
+
+			TransformBegin
+				#round top of main body
+				Translate 0 1 0
+				Rotate -90 1 0 0
+				Torus 0.8 0.2 0 45 360
+			TransformEnd
+			
+
+			TransformBegin
+				#top of main body the indent thingy
+				Translate 0 1.275 0
+				Rotate -90 1 0 0
+				Torus 1 0.15 -115 -180 360
+			TransformEnd
+
+
+
+			TransformBegin
+				#the swirly cylinder thingy - BASE
+				Translate 0 1.4 0
+				Rotate -90 1 0 0
+				Cylinder 0.85 -0.15 0.29 360
+			TransformEnd
+
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.32 0
+				Rotate 90 1 0 0
+				Torus 0.85 0.04 -90 90 360
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				#Rotate 10 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				Rotate 90 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 180 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 270 0 0 10.1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit ends parabololololoid
+				Translate -0.285 1.42 -0.825
+				Rotate -90 1 0 0
+				Rotate 90 0 1 0
+				Rotate -6 0 1 0
+				Rotate -5 1 0 0
+				Paraboloid 0.05 0 0.3 180
+			TransformEnd
+
+			TransformBegin
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.42 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				#Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+			#######################################################################
+			#TORUS inside outside
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.68 0
+				Rotate -90 1 0 0
+				Torus 0.78625 0.06375 0 180 360
+			TransformEnd
+
+			#######################################################################
+
+				
+			# INSIDE JAR GLASS
+
+		
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.85 0.94 0.85 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+
+				TransformBegin
+					#the swirly cylinder thingy - BASE
+					Translate 0 1.4 0
+					Rotate -90 1 0 0
+					Cylinder 0.85 -0.159 0.2958 360
+				TransformEnd
+
+
+			TransformEnd	
+			
+
+
+		AttributeEnd
+
+		###########################################################
+		# OUTSIDE DIRT LAYER
+		AttributeBegin
+			TransformBegin
+				Scale 1.001 1.001 1.001
+
+				Pattern "PxrTexture" "dirtTexture2" "string filename" "ColourMapDirt.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "dirtAlpha2" "string filename" "WhiteMapDirt.tx"
+				Bxdf "PxrSurface" "dirtLayer2" "reference color diffuseColor"  ['dirtTexture2:resultRGB'] "reference float presence"  ['dirtAlpha2:resultR'] 
+				
+				TransformBegin
+					TransformBegin
+						#main body middle
+						Rotate -90 1 0 0
+						Cylinder 1 -1 1 360
+						#Disk -1 1 360
+						
+					TransformEnd
+					
+					#BOTTOM
+
+					TransformBegin
+						#bottom of main body
+						Translate 0 -1 0
+						Rotate 90 1 0 0
+						Torus 0.55 0.45 0 55 360
+					TransformEnd
+
+					TransformBegin
+						#bottom of main body bottom of the bottom
+						Translate 0 -1.32 0
+						Scale 1 0.35 1
+						Rotate 90 1 0 0
+						Torus 0.55 0.3 5 65 360
+					TransformEnd
+
+					TransformBegin
+						#bottom ring
+						Translate 0 -1.4 0
+						Rotate 90 1 0 0
+						Torus 0.65 0.06 0 180 360
+					TransformEnd
+
+					TransformBegin
+						#bottom bottom bottom sphere
+						Translate 0 -1.64 0
+						Scale 1 0.5 1
+						Rotate -90 1 0 0
+						Sphere 0.8 0.5 1 -360
+					TransformEnd
+
+					#TOP
+
+					TransformBegin
+						#round top of main body
+						Translate 0 1 0
+						Rotate -90 1 0 0
+						Torus 0.8 0.2 0 45 360
+					TransformEnd
+					
+
+					TransformBegin
+						#top of main body the indent thingy
+						Translate 0 1.275 0
+						Rotate -90 1 0 0
+						Torus 1 0.15 -115 -180 360
+					TransformEnd
+
+
+
+					TransformBegin
+						#the swirly cylinder thingy - BASE
+						Translate 0 1.4 0
+						Rotate -90 1 0 0
+						Cylinder 0.85 -0.15 0.29 360
+					TransformEnd
+
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.32 0
+						Rotate 90 1 0 0
+						Torus 0.85 0.04 -90 90 360
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						#Rotate 10 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						Rotate 90 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 180 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 270 0 0 10.1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit ends parabololololoid
+						Translate -0.285 1.42 -0.825
+						Rotate -90 1 0 0
+						Rotate 90 0 1 0
+						Rotate -6 0 1 0
+						Rotate -5 1 0 0
+						Paraboloid 0.05 0 0.3 180
+					TransformEnd
+
+					TransformBegin
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.42 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						#Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+					#######################################################################
+					#TORUS inside outside
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.68 0
+						Rotate -90 1 0 0
+						Torus 0.78625 0.06375 0 180 360
+					TransformEnd
+				TransformEnd
+			TransformEnd	
+				
+		AttributeEnd
+
+		###########################################################
+		#LABEL
+
+		TransformBegin
+			Scale 1.001 1.001 1.001
+			Rotate -90 1 0 0
+			AttributeBegin
+				#Bxdf "PxrDiffuse" "diffuseLabel" "color diffuseColor" [0.9 0.9 0.9]
+				#Pattern "PxrManifold2D" "stretchyBit" "float scaleS" [2]
+				Pattern "PxrTexture" "labelTexture" "string filename" "UltramarineLayerStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "labelAlpha" "string filename" "transparencyMap.tx"
+				Bxdf "PxrSurface" "texturedLabel" "reference color diffuseColor"  ['labelTexture:resultRGB'] "reference float presence"  ['labelAlpha:resultR']
+				Cylinder 1 -1 1 200
+			AttributeEnd
+		TransformEnd
+
+		############################################################
+
+		
+		# INSIDE JAR PAINT
+
+		AttributeBegin
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			
+			
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [1 0 0.9] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			
+			
+			
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.84 0.93 0.84 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+				#TransformBegin
+				#	#Scale 1 0.2 1
+				#	#Translate 0 0.5 0
+
+				#	TransformBegin
+				#		#the swirly cylinder thingy - BASE
+				#		Translate 0 1.4 0
+				#		Rotate -90 1 0 0
+				#		Cylinder 0.85 -0.19 0.25 360
+				#	TransformEnd
+				#TransformEnd
+
+			TransformEnd
+
+		AttributeEnd	
+
+
+
+
+
+		###############################################################################
+
+		# LID
+		AttributeBegin
+			Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+
+			
+
+			TransformBegin
+			#general lid control
+				Translate 0 0.05 0
+				Scale 1 1.15 1
+
+				AttributeBegin
+					TransformBegin
+						#main body of the lid
+						Translate 0 1.35 0
+						Rotate -90 1 0 0
+						Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+						Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+						Cylinder 1 -0.1 0.1 360
+					TransformEnd
+				AttributeEnd
+
+				AttributeBegin
+					TransformBegin
+						#Disk top
+						#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+						#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+
+						Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+						Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+
+
+
+
+						Translate 0 1.46 0
+						Rotate -90 1 0 0 
+						
+						Disk 0 0.8 360
+					TransformEnd
+				AttributeEnd	
+				
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 0 65 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 115 180 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.51 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.1
+					Torus 0.8 0.1 65 115 360
+				TransformEnd
+
+				TransformBegin
+					#torus edge top 
+					Translate 0 1.45 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.3
+					Torus 0.9 0.1 0 90 360
+				TransformEnd
+
+				# Bottom torus edge
+
+				TransformBegin
+					#Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd	
+
+				TransformBegin
+					Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+
+				#########################################
+				# outwards bits
+				TransformBegin
+					#Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+			TransformEnd	
+		AttributeEnd	
+		#####################################################
+
+
+	TransformEnd
+   
+   
+    # Jar 3
+    
+	TransformBegin
+        Translate 2 0 0.6
+        Rotate -125 0 1 0
+
+		#JAR BODY
+		AttributeBegin 
+			#######Bxdf "LamaDielectric" "glassShader" "color reflectionTint" [0 0 1] "int fresnelMode" [1] 
+			Bxdf "PxrSurface" "translucentShader" "int diffuseDoubleSided" [2] "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "int thinGlass" [0]
+			
+			# the normal whole glass
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [0]
+			# try PAINT
+
+			
+
+			# end of try Paint
+
+			TransformBegin
+				#main body middle
+				Rotate -90 1 0 0
+				Cylinder 1 -1 1 360
+				#Disk -1 1 360
+				
+			TransformEnd
+			
+			#BOTTOM
+
+			TransformBegin
+				#bottom of main body
+				Translate 0 -1 0
+				Rotate 90 1 0 0
+				Torus 0.55 0.45 0 55 360
+			TransformEnd
+
+			TransformBegin
+				#bottom of main body bottom of the bottom
+				Translate 0 -1.32 0
+				Scale 1 0.35 1
+				Rotate 90 1 0 0
+				Torus 0.55 0.3 5 65 360
+			TransformEnd
+
+			TransformBegin
+				#bottom ring
+				Translate 0 -1.4 0
+				Rotate 90 1 0 0
+				Torus 0.65 0.06 0 180 360
+			TransformEnd
+
+			TransformBegin
+				#bottom bottom bottom sphere
+				Translate 0 -1.64 0
+				Scale 1 0.5 1
+				Rotate -90 1 0 0
+				Sphere 0.8 0.5 1 -360
+			TransformEnd
+
+			#TOP
+
+			TransformBegin
+				#round top of main body
+				Translate 0 1 0
+				Rotate -90 1 0 0
+				Torus 0.8 0.2 0 45 360
+			TransformEnd
+			
+
+			TransformBegin
+				#top of main body the indent thingy
+				Translate 0 1.275 0
+				Rotate -90 1 0 0
+				Torus 1 0.15 -115 -180 360
+			TransformEnd
+
+
+
+			TransformBegin
+				#the swirly cylinder thingy - BASE
+				Translate 0 1.4 0
+				Rotate -90 1 0 0
+				Cylinder 0.85 -0.15 0.29 360
+			TransformEnd
+
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.32 0
+				Rotate 90 1 0 0
+				Torus 0.85 0.04 -90 90 360
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				#Rotate 10 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				Rotate 90 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 180 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 270 0 0 10.1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit ends parabololololoid
+				Translate -0.285 1.42 -0.825
+				Rotate -90 1 0 0
+				Rotate 90 0 1 0
+				Rotate -6 0 1 0
+				Rotate -5 1 0 0
+				Paraboloid 0.05 0 0.3 180
+			TransformEnd
+
+			TransformBegin
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.42 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				#Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+			#######################################################################
+			#TORUS inside outside
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.68 0
+				Rotate -90 1 0 0
+				Torus 0.78625 0.06375 0 180 360
+			TransformEnd
+
+			#######################################################################
+
+				
+			# INSIDE JAR GLASS
+
+		
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.85 0.94 0.85 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+
+				TransformBegin
+					#the swirly cylinder thingy - BASE
+					Translate 0 1.4 0
+					Rotate -90 1 0 0
+					Cylinder 0.85 -0.159 0.2958 360
+				TransformEnd
+
+
+			TransformEnd	
+			
+
+
+		AttributeEnd
+
+		###########################################################
+		# OUTSIDE DIRT LAYER
+		AttributeBegin
+			TransformBegin
+				Scale 1.001 1.001 1.001
+
+				Pattern "PxrTexture" "dirtTexture" "string filename" "ColourDirtMap2.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "dirtAlpha" "string filename" "WhiteDirtMap2.tx"
+				Bxdf "PxrSurface" "dirtLayer" "reference color diffuseColor"  ['dirtTexture:resultRGB'] "reference float presence"  ['dirtAlpha:resultR'] 
+				
+				TransformBegin
+					TransformBegin
+						#main body middle
+						Rotate -90 1 0 0
+						Cylinder 1 -1 1 360
+						#Disk -1 1 360
+						
+					TransformEnd
+					
+					#BOTTOM
+
+					TransformBegin
+						#bottom of main body
+						Translate 0 -1 0
+						Rotate 90 1 0 0
+						Torus 0.55 0.45 0 55 360
+					TransformEnd
+
+					TransformBegin
+						#bottom of main body bottom of the bottom
+						Translate 0 -1.32 0
+						Scale 1 0.35 1
+						Rotate 90 1 0 0
+						Torus 0.55 0.3 5 65 360
+					TransformEnd
+
+					TransformBegin
+						#bottom ring
+						Translate 0 -1.4 0
+						Rotate 90 1 0 0
+						Torus 0.65 0.06 0 180 360
+					TransformEnd
+
+					TransformBegin
+						#bottom bottom bottom sphere
+						Translate 0 -1.64 0
+						Scale 1 0.5 1
+						Rotate -90 1 0 0
+						Sphere 0.8 0.5 1 -360
+					TransformEnd
+
+					#TOP
+
+					TransformBegin
+						#round top of main body
+						Translate 0 1 0
+						Rotate -90 1 0 0
+						Torus 0.8 0.2 0 45 360
+					TransformEnd
+					
+
+					TransformBegin
+						#top of main body the indent thingy
+						Translate 0 1.275 0
+						Rotate -90 1 0 0
+						Torus 1 0.15 -115 -180 360
+					TransformEnd
+
+
+
+					TransformBegin
+						#the swirly cylinder thingy - BASE
+						Translate 0 1.4 0
+						Rotate -90 1 0 0
+						Cylinder 0.85 -0.15 0.29 360
+					TransformEnd
+
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.32 0
+						Rotate 90 1 0 0
+						Torus 0.85 0.04 -90 90 360
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						#Rotate 10 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						Rotate 90 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 180 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 270 0 0 10.1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit ends parabololololoid
+						Translate -0.285 1.42 -0.825
+						Rotate -90 1 0 0
+						Rotate 90 0 1 0
+						Rotate -6 0 1 0
+						Rotate -5 1 0 0
+						Paraboloid 0.05 0 0.3 180
+					TransformEnd
+
+					TransformBegin
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.42 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						#Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+					#######################################################################
+					#TORUS inside outside
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.68 0
+						Rotate -90 1 0 0
+						Torus 0.78625 0.06375 0 180 360
+					TransformEnd
+				TransformEnd
+			TransformEnd	
+				
+		AttributeEnd
+
+		###########################################################
+		#LABEL
+
+		TransformBegin
+			Scale 1.001 1.001 1.001
+			Rotate -90 1 0 0
+			AttributeBegin
+				#Bxdf "PxrDiffuse" "diffuseLabel" "color diffuseColor" [0.9 0.9 0.9]
+				#Pattern "PxrManifold2D" "stretchyBit" "float scaleS" [2]
+				Pattern "PxrTexture" "labelTexture" "string filename" "UltramarineLayerStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "labelAlpha" "string filename" "transparencyMap.tx"
+				Bxdf "PxrSurface" "texturedLabel" "reference color diffuseColor"  ['labelTexture:resultRGB'] "reference float presence"  ['labelAlpha:resultR']
+				Cylinder 1 -1 1 200
+			AttributeEnd
+		TransformEnd
+
+		############################################################
+
+		
+		# INSIDE JAR PAINT
+
+		AttributeBegin
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			
+			#MAYA NOISE
+		#	Pattern "PxrFractal" "pasted__PxrFractal4" "float frequency" [0.868085] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [1.54299998] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1]  "float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrFractal" "pasted__PxrFractal5" "float frequency" [2.48723412] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrVoronoise" "pasted__PxrVoronoise4" "float filter" [1] "float frequency" [1.29999995] "float jitter" [0] "color colorOffset" [0 0 0] "int octaves" [6] "int matchCppPattern" [0] "float lacunarity" [2] "float gain" [0.5] "int surfacePosition" [0] "int turbulent" [0] "color colorScale" [1 1 1] 
+		#		"float floatScale" [1] "float floatOffset" [0] "float smoothness" [1] "int betterContrast" [0] "float smoothnessOffset" [0] "int smoothnessOffsetWrap" [0]
+		#	Pattern "PxrFractal" "pasted__PxrFractal6" "float frequency" [1.08297873] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [7] "float dimension" [0.992907822] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrBlend" "pasted__PxrBlend3" "int clampOutput" [1] "int operation" [20] "reference color topRGB" ["pasted__PxrFractal5:resultRGB"] "float topA" [1] "color bottomRGB" [0 0.330300003 1] "float bottomA" [1]
+		#	Pattern "PxrThreshold" "pasted__PxrThreshold2" "int invert" [0] "reference color inputRGB" ["pasted__PxrFractal4:resultRGB"] "float threshold" [0.496732026] "int channel" [3] "float transitionWidth" [0.0898692831] "int transitionProfile" [1]
+		#	Pattern "PxrBlend" "pasted__PxrBlend4" "int clampOutput" [1] "int operation" [2] "reference color topRGB" ["pasted__PxrFractal6:resultRGB"] "float topA" [1] "color bottomRGB" [0.513000011 0.109453022 0.0564300083] "float bottomA" [1]
+		#	Pattern "PxrBump" "pasted__PxrBump4" "int disable" [0] "string filename" [""] "float blur" [0] "int firstChannel" [0] "int atlasStyle" [0] "int invertT" [1] "int lerp" [1] "int mipBias" [0] "float maxResolution" [0] "float adjustAmount" [1] "float surfaceNormalMix" [0] "int reverse" [0] "float scale" [0.300000012] "reference float inputBump" ["pasted__PxrVoronoise4:resultF"] "normal inputN" [1 0 0]
+		#	Pattern "PxrLayer" "pasted__LayerRust1" "int enableDiffuseAlways" [1] "int enableDiffuse" [1] "float diffuseGain" [0] "reference color diffuseColor" ["pasted__PxrBlend4:resultRGB"] "float diffuseRoughness" [0.24060151] "normal diffuseBumpNormal" [0 0 0] "color diffuseBackColor" [0.180000007 0.180000007 0.180000007] "float diffuseTransmitGain" [0] "color diffuseTransmitColor" [0.180000007 0.180000007 0.180000007] 
+		#		"int enableSpecular" [1] "float specularGain" [1] "color specularFaceColor" [0.0150375944 0.0150375944 0.0150375944] "color specularEdgeColor" [0 0 0] "color specularIor" [1.5 1.5 1.5] "color specularExtinctionCoeff" [0 0 0] 
+		#		"float specularRoughness" [0.646616518] "float specularAnisotropy" [0] "normal specularBumpNormal" [0 0 0] "int enableRoughSpecular" [0] "float roughSpecularGain" [0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] 
+		#		"color roughSpecularIor" [1.5 1.5 1.5] "color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "int enableClearcoat" [0] "float clearcoatGain" [0] 
+		#		"color clearcoatFaceColor" [0 0 0] "color clearcoatEdgeColor" [0 0 0] "color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] 
+		#		"float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] "float clearcoatThickness" [0] "color clearcoatAbsorptionTint" [0 0 0] "int enableIridescence" [0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] 
+		#		"color iridescenceSecondaryColor" [0 0 1] "float iridescenceThickness" [800] "float iridescenceRoughness" [0.200000003] "int enableFuzz" [0] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] 
+		#		"int enableSubsurface" [0] "float subsurfaceGain" [0] "color subsurfaceColor" [0.829999983 0.791000009 0.753000021] "float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] 
+		#		"float shortSubsurfaceDmfp" [5] "float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] "float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "int enableSinglescatter" [0] "float singlescatterGain" [0] 
+		#		"color singlescatterColor" [0.829999983 0.791000009 0.753000021] "float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] "float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] 
+		#		"int enableRR" [1] "float rrRefractionGain" [1] "float rrReflectionGain" [1] "color rrRefractionColor" [1 1 1] "float rrRoughness" [0.0052910056] "float rrRefractionRoughness" [-0.849624038] "float rrIor" [1.5] "int enableGlow" [0] "float glowGain" [0] "color glowColor" [1 1 1] 
+		#		"int enableInterior" [0] "color ssAlbedo" [0 0 0] "color extinction" [0 0 0] "normal bumpNormal" [0 0 0]
+		#	Pattern "PxrLayer" "pasted__LayerPaint1" "int enableDiffuseAlways" [1] "int enableDiffuse" [1] "float diffuseGain" [1] "reference color diffuseColor" ["pasted__PxrBlend3:resultRGB"] "float diffuseRoughness" [0.105263159] "normal diffuseBumpNormal" [0 0 0] "color diffuseBackColor" [0.180000007 0.180000007 0.180000007] "float diffuseTransmitGain" [0] "color diffuseTransmitColor" [0.180000007 0.180000007 0.180000007] 
+		#		"int enableSpecular" [1] "float specularGain" [1] "reference color specularFaceColor" ["pasted__PxrVoronoise4:resultRGB"] "color specularEdgeColor" [0.0827067643 0.0827067643 0.0827067643] "color specularIor" [1.5 1.5 1.5] "color specularExtinctionCoeff" [0 0 0] "float specularRoughness" [0.586466193] 
+		#		"float specularAnisotropy" [0] "normal specularBumpNormal" [0 0 0] "int enableRoughSpecular" [0] "float roughSpecularGain" [0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] "color roughSpecularIor" [1.5 1.5 1.5] 
+		#		"color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "int enableClearcoat" [0] "float clearcoatGain" [0] "color clearcoatFaceColor" [0 0 0] 
+		#		"color clearcoatEdgeColor" [0 0 0] "color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] "float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] 
+		#		"float clearcoatThickness" [0] "color clearcoatAbsorptionTint" [0 0 0] "int enableIridescence" [0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] "color iridescenceSecondaryColor" [0 0 1] 
+		#		"float iridescenceThickness" [800] "float iridescenceRoughness" [0.200000003] "int enableFuzz" [0] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] "int enableSubsurface" [0] "float subsurfaceGain" [0] 
+		#		"color subsurfaceColor" [0.829999983 0.791000009 0.753000021] "float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] "float shortSubsurfaceDmfp" [5] 
+		#		"float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] "float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "int enableSinglescatter" [0] "float singlescatterGain" [0] "color singlescatterColor" [0.829999983 0.791000009 0.753000021] 
+		#		"float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] "float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] "int enableRR" [0] "float rrRefractionGain" [0] 
+		#		"float rrReflectionGain" [0] "color rrRefractionColor" [1 1 1] "float rrRoughness" [0.100000001] "float rrRefractionRoughness" [-1] "float rrIor" [1.5] "int enableGlow" [0] "float glowGain" [0] "color glowColor" [1 1 1] "int enableInterior" [0] 
+		#		"color ssAlbedo" [0 0 0] "color extinction" [0 0 0] "reference normal bumpNormal" ["pasted__PxrBump4:resultN"]
+		#	Pattern "PxrInvert" "pasted__PxrInvert4" "reference color inputRGB" ["pasted__PxrThreshold2:resultRGB"] "int colorModel" [0] "int invertChannel0" [1] "int invertChannel1" [1] "int invertChannel2" [1]
+		#	Pattern "PxrLayerMixer" "pasted__PxrLayerMixer3" "int enableDiffuseAlways" [1] "int layer1Enabled" [1] "reference float layer1Mask" ["pasted__PxrThreshold2:resultR"] "int layer2Enabled" [1] "reference float layer2Mask" ["pasted__PxrInvert4:resultR"] "int layer3Enabled" [0] "float layer3Mask" [1] "int layer4Enabled" [0] "float layer4Mask" [1] "normal baselayer_bumpNormal" [0 0 0] "int baselayer_enableDiffuse" [0] "float baselayer_diffuseGain" [0] "color baselayer_diffuseColor" [0 0 0] 
+		#		"float baselayer_diffuseRoughness" [0] "normal baselayer_diffuseBumpNormal" [0 0 0] "color baselayer_diffuseBackColor" [0 0 0] "float baselayer_diffuseTransmitGain" [0] "color baselayer_diffuseTransmitColor" [0 0 0] "int baselayer_enableSpecular" [0] "color baselayer_specularFaceColor" [0 0 0] 
+		#		"color baselayer_specularEdgeColor" [0 0 0] "color baselayer_specularIor" [0 0 0] "color baselayer_specularExtinctionCoeff" [0 0 0] "float baselayer_specularRoughness" [0.200000003] "float baselayer_specularAnisotropy" [0] "normal baselayer_specularBumpNormal" [0 0 0] 
+		#		"int baselayer_enableRoughSpecular" [0] "color baselayer_roughSpecularFaceColor" [0 0 0] "color baselayer_roughSpecularEdgeColor" [0 0 0] "color baselayer_roughSpecularIor" [0 0 0] "color baselayer_roughSpecularExtinctionCoeff" [0 0 0] 
+		#		"float baselayer_roughSpecularRoughness" [0.600000024] "float baselayer_roughSpecularAnisotropy" [0] "normal baselayer_roughSpecularBumpNormal" [0 0 0] "int baselayer_enableClearcoat" [0] "color baselayer_clearcoatFaceColor" [0 0 0] "color baselayer_clearcoatEdgeColor" [0 0 0] "color baselayer_clearcoatIor" [0 0 0] 
+		#		"color baselayer_clearcoatExtinctionCoeff" [0 0 0] "float baselayer_clearcoatRoughness" [0] "float baselayer_clearcoatAnisotropy" [0] "normal baselayer_clearcoatBumpNormal" [0 0 0] "float baselayer_clearcoatThickness" [0] "color baselayer_clearcoatAbsorptionTint" [0 0 0] 
+		#		"int baselayer_enableIridescence" [0] "float baselayer_iridescenceFaceGain" [0] "float baselayer_iridescenceEdgeGain" [0] "color baselayer_iridescencePrimaryColor" [0 0 0] "color baselayer_iridescenceSecondaryColor" [0 0 0] "float baselayer_iridescenceThickness" [0] "float baselayer_iridescenceRoughness" [0.200000003] "int baselayer_enableFuzz" [0] "float baselayer_fuzzGain" [0] 
+		#		"color baselayer_fuzzColor" [0 0 0] "float baselayer_fuzzConeAngle" [0] "normal baselayer_fuzzBumpNormal" [0 0 0] "int baselayer_enableRR" [0] "float baselayer_refractionGain" [0] "color baselayer_refractionColor" [1 1 1] "float baselayer_reflectionGain" [0] 
+		#		"float baselayer_glassRoughness" [0.100000001] "float baselayer_glassRefractionRoughness" [-1] "float baselayer_glassIor" [1.5] "int baselayer_enableSubsurface" [0] "float baselayer_subsurfaceGain" [0] "color baselayer_subsurfaceColor" [0 0 0] "float baselayer_subsurfaceDmfp" [1] "color baselayer_subsurfaceDmfpColor" [1 1 1] "float baselayer_shortSubsurfaceGain" [0] 
+		#		"color baselayer_shortSubsurfaceColor" [0 0 0] "float baselayer_shortSubsurfaceDmfp" [1] "float baselayer_longSubsurfaceGain" [0] "color baselayer_longSubsurfaceColor" [0 0 0] "float baselayer_longSubsurfaceDmfp" [1] "float baselayer_subsurfaceDirectionality" [0] "color baselayer_subsurfacePostTint" [1 1 1] 
+		#		"float baselayer_subsurfaceTransmitGain" [0] "int baselayer_enableSinglescatter" [0] "float baselayer_singlescatterGain" [0] "color baselayer_singlescatterColor" [0 0 0] "float baselayer_singlescatterMfp" [1] "color baselayer_singlescatterMfpColor" [1 1 1] "float baselayer_singlescatterDirectionality" [0] "float baselayer_singlescatterIor" [0] "float baselayer_singlescatterBlur" [0] 
+		#		"float baselayer_singlescatterDirectGain" [0] "color baselayer_singlescatterDirectGainTint" [1 1 1] "int baselayer_enableGlow" [0] "float baselayer_glowGain" [0] "color baselayer_glowColor" [0 0 0] "int baselayer_enableInterior" [0] "color baselayer_ssAlbedo" [0 0 0] 
+		#		"color baselayer_extinction" [0 0 0] "normal layer1_bumpNormal" [0 0 0] "int layer1_enableDiffuse" [1] "reference float layer1_diffuseGain" ["pasted__LayerRust1:pxrMaterialOut_diffuseGain"] "reference color layer1_diffuseColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseColor"] "reference float layer1_diffuseRoughness" ["pasted__LayerRust1:pxrMaterialOut_diffuseRoughness"] "normal layer1_diffuseBumpNormal" [0 0 0] "reference color layer1_diffuseBackColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseBackColor"] "reference float layer1_diffuseTransmitGain" ["pasted__LayerRust1:pxrMaterialOut_diffuseTransmitGain"] 
+		#		"reference color layer1_diffuseTransmitColor" ["pasted__LayerRust1:pxrMaterialOut_diffuseTransmitColor"] "int layer1_enableSpecular" [1] "reference color layer1_specularFaceColor" ["pasted__LayerRust1:pxrMaterialOut_specularFaceColor"] "reference color layer1_specularEdgeColor" ["pasted__LayerRust1:pxrMaterialOut_specularEdgeColor"] "reference color layer1_specularIor" ["pasted__LayerRust1:pxrMaterialOut_specularIor"] "reference color layer1_specularExtinctionCoeff" ["pasted__LayerRust1:pxrMaterialOut_specularExtinctionCoeff"] "reference float layer1_specularRoughness" ["pasted__LayerRust1:pxrMaterialOut_specularRoughness"] "reference float layer1_specularAnisotropy" ["pasted__LayerRust1:pxrMaterialOut_specularAnisotropy"] "normal layer1_specularBumpNormal" [0 0 0] "int layer1_enableRoughSpecular" [0] "color layer1_roughSpecularFaceColor" [0 0 0] "color layer1_roughSpecularEdgeColor" [0 0 0] 
+		#		"color layer1_roughSpecularIor" [0 0 0] "color layer1_roughSpecularExtinctionCoeff" [0 0 0] "float layer1_roughSpecularRoughness" [0.600000024] "float layer1_roughSpecularAnisotropy" [0] "normal layer1_roughSpecularBumpNormal" [0 0 0] "int layer1_enableClearcoat" [0] "color layer1_clearcoatFaceColor" [0 0 0] 
+		#		"color layer1_clearcoatEdgeColor" [0 0 0] "color layer1_clearcoatIor" [0 0 0] "color layer1_clearcoatExtinctionCoeff" [0 0 0] "float layer1_clearcoatRoughness" [0] "float layer1_clearcoatAnisotropy" [0] "normal layer1_clearcoatBumpNormal" [0 0 0] 
+		#		"float layer1_clearcoatThickness" [0] "color layer1_clearcoatAbsorptionTint" [0 0 0] "int layer1_enableIridescence" [0] "float layer1_iridescenceFaceGain" [0] "float layer1_iridescenceEdgeGain" [0] "color layer1_iridescencePrimaryColor" [0 0 0] "color layer1_iridescenceSecondaryColor" [0 0 0] 
+		#		"float layer1_iridescenceThickness" [0] "float layer1_iridescenceRoughness" [0.200000003] "int layer1_enableFuzz" [0] "float layer1_fuzzGain" [0] "color layer1_fuzzColor" [0 0 0] "float layer1_fuzzConeAngle" [0] "normal layer1_fuzzBumpNormal" [0 0 0] "int layer1_enableRR" [1] "reference float layer1_refractionGain" ["pasted__LayerRust1:pxrMaterialOut_refractionGain"] "reference color layer1_refractionColor" ["pasted__LayerRust1:pxrMaterialOut_refractionColor"] 
+		#		"reference float layer1_reflectionGain" ["pasted__LayerRust1:pxrMaterialOut_reflectionGain"] "reference float layer1_glassRoughness" ["pasted__LayerRust1:pxrMaterialOut_glassRoughness"] "reference float layer1_glassRefractionRoughness" ["pasted__LayerRust1:pxrMaterialOut_glassRefractionRoughness"] "reference float layer1_glassIor" ["pasted__LayerRust1:pxrMaterialOut_glassIor"] "int layer1_enableSubsurface" [0] "float layer1_subsurfaceGain" [0] "color layer1_subsurfaceColor" [0 0 0] "float layer1_subsurfaceDmfp" [1] "color layer1_subsurfaceDmfpColor" [1 1 1] "float layer1_shortSubsurfaceGain" [0] "color layer1_shortSubsurfaceColor" [0 0 0] 
+		#		"float layer1_shortSubsurfaceDmfp" [1] "float layer1_longSubsurfaceGain" [0] "color layer1_longSubsurfaceColor" [0 0 0] "float layer1_longSubsurfaceDmfp" [1] "float layer1_subsurfaceDirectionality" [0] "color layer1_subsurfacePostTint" [1 1 1] "float layer1_subsurfaceTransmitGain" [0] "int layer1_enableSinglescatter" [0] "float layer1_singlescatterGain" [0] 
+		#		"color layer1_singlescatterColor" [0 0 0] "float layer1_singlescatterMfp" [1] "color layer1_singlescatterMfpColor" [1 1 1] "float layer1_singlescatterDirectionality" [0] "float layer1_singlescatterIor" [0] "float layer1_singlescatterBlur" [0] "float layer1_singlescatterDirectGain" [0] "color layer1_singlescatterDirectGainTint" [1 1 1] 
+		#		"int layer1_enableGlow" [0] "float layer1_glowGain" [0] "color layer1_glowColor" [0 0 0] "int layer1_enableInterior" [0] "color layer1_ssAlbedo" [0 0 0] "color layer1_extinction" [0 0 0] "reference normal layer2_bumpNormal" ["pasted__LayerPaint1:pxrMaterialOut_bumpNormal"] "int layer2_enableDiffuse" [1] 
+		#		"reference float layer2_diffuseGain" ["pasted__LayerPaint1:pxrMaterialOut_diffuseGain"] "reference color layer2_diffuseColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseColor"] "reference float layer2_diffuseRoughness" ["pasted__LayerPaint1:pxrMaterialOut_diffuseRoughness"] "normal layer2_diffuseBumpNormal" [0 0 0] "reference color layer2_diffuseBackColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseBackColor"] "reference float layer2_diffuseTransmitGain" ["pasted__LayerPaint1:pxrMaterialOut_diffuseTransmitGain"] "reference color layer2_diffuseTransmitColor" ["pasted__LayerPaint1:pxrMaterialOut_diffuseTransmitColor"] "int layer2_enableSpecular" [1] "reference color layer2_specularFaceColor" ["pasted__LayerPaint1:pxrMaterialOut_specularFaceColor"] "reference color layer2_specularEdgeColor" ["pasted__LayerPaint1:pxrMaterialOut_specularEdgeColor"] "reference color layer2_specularIor" ["pasted__LayerPaint1:pxrMaterialOut_specularIor"] "reference color layer2_specularExtinctionCoeff" ["pasted__LayerPaint1:pxrMaterialOut_specularExtinctionCoeff"] "reference float layer2_specularRoughness" ["pasted__LayerPaint1:pxrMaterialOut_specularRoughness"] "reference float layer2_specularAnisotropy" ["pasted__LayerPaint1:pxrMaterialOut_specularAnisotropy"] "normal layer2_specularBumpNormal" [0 0 0] 
+		#		"int layer2_enableRoughSpecular" [0] "color layer2_roughSpecularFaceColor" [0 0 0] "color layer2_roughSpecularEdgeColor" [0 0 0] "color layer2_roughSpecularIor" [0 0 0] "color layer2_roughSpecularExtinctionCoeff" [0 0 0] 
+		#		"float layer2_roughSpecularRoughness" [0.600000024] "float layer2_roughSpecularAnisotropy" [0] "normal layer2_roughSpecularBumpNormal" [0 0 0] "int layer2_enableClearcoat" [0] "color layer2_clearcoatFaceColor" [0 0 0] "color layer2_clearcoatEdgeColor" [0 0 0] "color layer2_clearcoatIor" [0 0 0] 
+		#		"color layer2_clearcoatExtinctionCoeff" [0 0 0] "float layer2_clearcoatRoughness" [0] "float layer2_clearcoatAnisotropy" [0] "normal layer2_clearcoatBumpNormal" [0 0 0] "float layer2_clearcoatThickness" [0] "color layer2_clearcoatAbsorptionTint" [0 0 0] 
+		#		"int layer2_enableIridescence" [0] "float layer2_iridescenceFaceGain" [0] "float layer2_iridescenceEdgeGain" [0] "color layer2_iridescencePrimaryColor" [0 0 0] "color layer2_iridescenceSecondaryColor" [0 0 0] "float layer2_iridescenceThickness" [0] "float layer2_iridescenceRoughness" [0.200000003] "int layer2_enableFuzz" [0] "float layer2_fuzzGain" [0] 
+		#		"color layer2_fuzzColor" [0 0 0] "float layer2_fuzzConeAngle" [0] "normal layer2_fuzzBumpNormal" [0 0 0] "int layer2_enableRR" [0] "float layer2_refractionGain" [0] "color layer2_refractionColor" [1 1 1] "float layer2_reflectionGain" [0] 
+		#		"float layer2_glassRoughness" [0.100000001] "float layer2_glassRefractionRoughness" [-1] "float layer2_glassIor" [1.5] "int layer2_enableSubsurface" [0] "float layer2_subsurfaceGain" [0] "color layer2_subsurfaceColor" [0 0 0] "float layer2_subsurfaceDmfp" [1] "color layer2_subsurfaceDmfpColor" [1 1 1] "float layer2_shortSubsurfaceGain" [0] 
+		#		"color layer2_shortSubsurfaceColor" [0 0 0] "float layer2_shortSubsurfaceDmfp" [1] "float layer2_longSubsurfaceGain" [0] "color layer2_longSubsurfaceColor" [0 0 0] "float layer2_longSubsurfaceDmfp" [1] "float layer2_subsurfaceDirectionality" [0] "color layer2_subsurfacePostTint" [1 1 1] 
+		#		"float layer2_subsurfaceTransmitGain" [0] "int layer2_enableSinglescatter" [0] "float layer2_singlescatterGain" [0] "color layer2_singlescatterColor" [0 0 0] "float layer2_singlescatterMfp" [1] "color layer2_singlescatterMfpColor" [1 1 1] "float layer2_singlescatterDirectionality" [0] "float layer2_singlescatterIor" [0] "float layer2_singlescatterBlur" [0] 
+		#		"float layer2_singlescatterDirectGain" [0] "color layer2_singlescatterDirectGainTint" [1 1 1] "int layer2_enableGlow" [0] "float layer2_glowGain" [0] "color layer2_glowColor" [0 0 0] "int layer2_enableInterior" [0] "color layer2_ssAlbedo" [0 0 0] 
+		#		"color layer2_extinction" [0 0 0] "normal layer3_bumpNormal" [0 0 0] "int layer3_enableDiffuse" [0] "float layer3_diffuseGain" [0] "color layer3_diffuseColor" [0 0 0] "float layer3_diffuseRoughness" [0] "normal layer3_diffuseBumpNormal" [0 0 0] 
+		#		"color layer3_diffuseBackColor" [0 0 0] "float layer3_diffuseTransmitGain" [0] "color layer3_diffuseTransmitColor" [0 0 0] "int layer3_enableSpecular" [0] "color layer3_specularFaceColor" [0 0 0] "color layer3_specularEdgeColor" [0 0 0] 
+		#		"color layer3_specularIor" [0 0 0] "color layer3_specularExtinctionCoeff" [0 0 0] "float layer3_specularRoughness" [0.200000003] "float layer3_specularAnisotropy" [0] "normal layer3_specularBumpNormal" [0 0 0] "int layer3_enableRoughSpecular" [0] "color layer3_roughSpecularFaceColor" [0 0 0] 
+		#		"color layer3_roughSpecularEdgeColor" [0 0 0] "color layer3_roughSpecularIor" [0 0 0] "color layer3_roughSpecularExtinctionCoeff" [0 0 0] "float layer3_roughSpecularRoughness" [0.600000024] "float layer3_roughSpecularAnisotropy" [0] "normal layer3_roughSpecularBumpNormal" [0 0 0] 
+		#		"int layer3_enableClearcoat" [0] "color layer3_clearcoatFaceColor" [0 0 0] "color layer3_clearcoatEdgeColor" [0 0 0] "color layer3_clearcoatIor" [0 0 0] "color layer3_clearcoatExtinctionCoeff" [0 0 0] 
+		#		"float layer3_clearcoatRoughness" [0] "float layer3_clearcoatAnisotropy" [0] "normal layer3_clearcoatBumpNormal" [0 0 0] "float layer3_clearcoatThickness" [0] "color layer3_clearcoatAbsorptionTint" [0 0 0] "int layer3_enableIridescence" [0] "float layer3_iridescenceFaceGain" [0] "float layer3_iridescenceEdgeGain" [0] "color layer3_iridescencePrimaryColor" [0 0 0] 
+		#		"color layer3_iridescenceSecondaryColor" [0 0 0] "float layer3_iridescenceThickness" [0] "float layer3_iridescenceRoughness" [0.200000003] "int layer3_enableFuzz" [0] "float layer3_fuzzGain" [0] "color layer3_fuzzColor" [0 0 0] "float layer3_fuzzConeAngle" [0] "normal layer3_fuzzBumpNormal" [0 0 0] 
+		#		"int layer3_enableRR" [0] "float layer3_refractionGain" [0] "color layer3_refractionColor" [1 1 1] "float layer3_reflectionGain" [0] "float layer3_glassRoughness" [0.100000001] "float layer3_glassRefractionRoughness" [-1] "float layer3_glassIor" [1.5] "int layer3_enableSubsurface" [0] "float layer3_subsurfaceGain" [0] "color layer3_subsurfaceColor" [0 0 0] 
+		#		"float layer3_subsurfaceDmfp" [1] "color layer3_subsurfaceDmfpColor" [1 1 1] "float layer3_shortSubsurfaceGain" [0] "color layer3_shortSubsurfaceColor" [0 0 0] "float layer3_shortSubsurfaceDmfp" [1] "float layer3_longSubsurfaceGain" [0] "color layer3_longSubsurfaceColor" [0 0 0] 
+		#		"float layer3_longSubsurfaceDmfp" [1] "float layer3_subsurfaceDirectionality" [0] "color layer3_subsurfacePostTint" [1 1 1] "float layer3_subsurfaceTransmitGain" [0] "int layer3_enableSinglescatter" [0] "float layer3_singlescatterGain" [0] "color layer3_singlescatterColor" [0 0 0] "float layer3_singlescatterMfp" [1] "color layer3_singlescatterMfpColor" [1 1 1] 
+		#		"float layer3_singlescatterDirectionality" [0] "float layer3_singlescatterIor" [0] "float layer3_singlescatterBlur" [0] "float layer3_singlescatterDirectGain" [0] "color layer3_singlescatterDirectGainTint" [1 1 1] "int layer3_enableGlow" [0] "float layer3_glowGain" [0] "color layer3_glowColor" [0 0 0] "int layer3_enableInterior" [0] 
+		#		"color layer3_ssAlbedo" [0 0 0] "color layer3_extinction" [0 0 0] "normal layer4_bumpNormal" [0 0 0] "int layer4_enableDiffuse" [0] "float layer4_diffuseGain" [0] "color layer4_diffuseColor" [0 0 0] 
+		#		"float layer4_diffuseRoughness" [0] "normal layer4_diffuseBumpNormal" [0 0 0] "color layer4_diffuseBackColor" [0 0 0] "float layer4_diffuseTransmitGain" [0] "color layer4_diffuseTransmitColor" [0 0 0] "int layer4_enableSpecular" [0] "color layer4_specularFaceColor" [0 0 0] 
+		#		"color layer4_specularEdgeColor" [0 0 0] "color layer4_specularIor" [0 0 0] "color layer4_specularExtinctionCoeff" [0 0 0] "float layer4_specularRoughness" [0.200000003] "float layer4_specularAnisotropy" [0] "normal layer4_specularBumpNormal" [0 0 0] 
+		#		"int layer4_enableRoughSpecular" [0] "color layer4_roughSpecularFaceColor" [0 0 0] "color layer4_roughSpecularEdgeColor" [0 0 0] "color layer4_roughSpecularIor" [0 0 0] "color layer4_roughSpecularExtinctionCoeff" [0 0 0] 
+		#		"float layer4_roughSpecularRoughness" [0.600000024] "float layer4_roughSpecularAnisotropy" [0] "normal layer4_roughSpecularBumpNormal" [0 0 0] "int layer4_enableClearcoat" [0] "color layer4_clearcoatFaceColor" [0 0 0] "color layer4_clearcoatEdgeColor" [0 0 0] "color layer4_clearcoatIor" [0 0 0] 
+		#		"color layer4_clearcoatExtinctionCoeff" [0 0 0] "float layer4_clearcoatRoughness" [0] "float layer4_clearcoatAnisotropy" [0] "normal layer4_clearcoatBumpNormal" [0 0 0] "float layer4_clearcoatThickness" [0] "color layer4_clearcoatAbsorptionTint" [0 0 0] 
+		#		"int layer4_enableIridescence" [0] "float layer4_iridescenceFaceGain" [0] "float layer4_iridescenceEdgeGain" [0] "color layer4_iridescencePrimaryColor" [0 0 0] "color layer4_iridescenceSecondaryColor" [0 0 0] "float layer4_iridescenceThickness" [0] "float layer4_iridescenceRoughness" [0.200000003] "int layer4_enableFuzz" [0] "float layer4_fuzzGain" [0] 
+		#		"color layer4_fuzzColor" [0 0 0] "float layer4_fuzzConeAngle" [0] "normal layer4_fuzzBumpNormal" [0 0 0] "int layer4_enableRR" [0] "float layer4_refractionGain" [0] "color layer4_refractionColor" [1 1 1] "float layer4_reflectionGain" [0] 
+		#		"float layer4_glassRoughness" [0.100000001] "float layer4_glassRefractionRoughness" [-1] "float layer4_glassIor" [1.5] "int layer4_enableSubsurface" [0] "float layer4_subsurfaceGain" [0] "color layer4_subsurfaceColor" [0 0 0] "float layer4_subsurfaceDmfp" [1] "color layer4_subsurfaceDmfpColor" [1 1 1] "float layer4_shortSubsurfaceGain" [0] 
+		#		"color layer4_shortSubsurfaceColor" [0 0 0] "float layer4_shortSubsurfaceDmfp" [1] "float layer4_longSubsurfaceGain" [0] "color layer4_longSubsurfaceColor" [0 0 0] "float layer4_longSubsurfaceDmfp" [1] "float layer4_subsurfaceDirectionality" [0] "color layer4_subsurfacePostTint" [1 1 1] 
+		#		"float layer4_subsurfaceTransmitGain" [0] "int layer4_enableSinglescatter" [0] "float layer4_singlescatterGain" [0] "color layer4_singlescatterColor" [0 0 0] "float layer4_singlescatterMfp" [1] "color layer4_singlescatterMfpColor" [1 1 1] "float layer4_singlescatterDirectionality" [0] "float layer4_singlescatterIor" [0] "float layer4_singlescatterBlur" [0] 
+		#		"float layer4_singlescatterDirectGain" [0] "color layer4_singlescatterDirectGainTint" [1 1 1] "int layer4_enableGlow" [0] "float layer4_glowGain" [0] "color layer4_glowColor" [0 0 0] "int layer4_enableInterior" [0] "color layer4_ssAlbedo" [0 0 0] 
+		#		"color layer4_extinction" [0 0 0]
+		#	Bxdf "PxrLayerSurface" "GlassPaintPxrLayerSurface_PATTY1" "reference float presence" ["pasted__PxrThreshold2:resultR"] "int shadowBumpTerminator" [0] "float blend" [0] "color shadowColor" [0 0 0] "reference float diffuseGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseGain"] "reference color diffuseColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseColor"] "reference float diffuseRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseRoughness"] "normal diffuseBumpNormal" [0 0 0] "reference color diffuseBackColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseBackColor"] "reference float diffuseTransmitGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseTransmitGain"] "reference color diffuseTransmitColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_diffuseTransmitColor"] "reference color specularFaceColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularFaceColor"] "reference color specularEdgeColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularEdgeColor"] 
+		#		"reference color specularIor" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularIor"] "reference color specularExtinctionCoeff" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularExtinctionCoeff"] "reference float specularRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularRoughness"] "reference float specularAnisotropy" ["pasted__PxrLayerMixer3:pxrMaterialOut_specularAnisotropy"] "normal specularBumpNormal" [0 0 0] "color roughSpecularFaceColor" [0 0 0] "color roughSpecularEdgeColor" [0 0 0] "color roughSpecularIor" [1.5 1.5 1.5] 
+		#		"color roughSpecularExtinctionCoeff" [0 0 0] "float roughSpecularRoughness" [0.600000024] "float roughSpecularAnisotropy" [0] "normal roughSpecularBumpNormal" [0 0 0] "color clearcoatFaceColor" [0 0 0] "color clearcoatEdgeColor" [0 0 0] 
+		#		"color clearcoatIor" [1.5 1.5 1.5] "color clearcoatExtinctionCoeff" [0 0 0] "float clearcoatRoughness" [0] "float clearcoatAnisotropy" [0] "normal clearcoatBumpNormal" [0 0 0] "float clearcoatThickness" [0] 
+		#		"color clearcoatAbsorptionTint" [0 0 0] "float iridescenceFaceGain" [0] "float iridescenceEdgeGain" [0] "color iridescencePrimaryColor" [1 0 0] "color iridescenceSecondaryColor" [0 0 1] "float iridescenceThickness" [800] 
+		#		"float iridescenceRoughness" [0.200000003] "float fuzzGain" [0] "color fuzzColor" [1 1 1] "float fuzzConeAngle" [8] "normal fuzzBumpNormal" [0 0 0] "float subsurfaceGain" [0] "color subsurfaceColor" [0.829999983 0.791000009 0.753000021] 
+		#		"float subsurfaceDmfp" [10] "color subsurfaceDmfpColor" [0.851000011 0.556999981 0.395000011] "float shortSubsurfaceGain" [0] "color shortSubsurfaceColor" [0.899999976 0.899999976 0.899999976] "float shortSubsurfaceDmfp" [5] "float longSubsurfaceGain" [0] "color longSubsurfaceColor" [0.800000012 0 0] 
+		#		"float longSubsurfaceDmfp" [20] "float subsurfaceDirectionality" [0] "color subsurfacePostTint" [1 1 1] "float subsurfaceTransmitGain" [0] "float singlescatterGain" [0] "color singlescatterColor" [0.829999983 0.791000009 0.753000021] "float singlescatterMfp" [10] "color singlescatterMfpColor" [0.851000011 0.556999981 0.395000011] 
+		#		"float singlescatterDirectionality" [0] "float singlescatterIor" [1.29999995] "float singlescatterBlur" [0] "float singlescatterDirectGain" [0] "color singlescatterDirectGainTint" [1 1 1] "float glowGain" [0] "color glowColor" [1 1 1] "color ssAlbedo" [0 0 0] 
+		#		"color extinction" [0 0 0] "reference normal bumpNormal" ["pasted__PxrLayerMixer3:pxrMaterialOut_bumpNormal"] "reference float refractionGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_refractionGain"] "reference color refractionColor" ["pasted__PxrLayerMixer3:pxrMaterialOut_refractionColor"] "reference float reflectionGain" ["pasted__PxrLayerMixer3:pxrMaterialOut_reflectionGain"] "reference float glassRoughness" ["pasted__PxrLayerMixer3:pxrMaterialOut_glassRoughness"] "reference float glassIor" ["pasted__PxrLayerMixer3:pxrMaterialOut_glassIor"] "float diffuseExponent" [1] "int diffuseDoubleSided" [1] "int diffuseBackUseDiffuseColor" [1] "int specularFresnelMode" [0] "float specularFresnelShape" [5] "int specularModelType" [0] "vector specularAnisotropyDirection" [0 0 0] 
+		#		"int specularDoubleSided" [0] "int roughSpecularFresnelMode" [0] "float roughSpecularFresnelShape" [5] "int roughSpecularModelType" [0] "vector roughSpecularAnisotropyDirection" [0 0 0] "int roughSpecularDoubleSided" [0] "int clearcoatFresnelMode" [0] "float clearcoatFresnelShape" [5] "int clearcoatModelType" [0] "vector clearcoatAnisotropyDirection" [0 0 0] "int clearcoatDoubleSided" [0] "float specularEnergyCompensation" [1] 
+		#		"float clearcoatEnergyCompensation" [1] "float iridescenceFresnelShape" [5] "int iridescenceMode" [0] "float iridescenceCurve" [1] "float iridescenceScale" [1] "int iridescenceFlip" [0] "int iridescenceDoubleSided" [0] "int fuzzDoubleSided" [0] "int subsurfaceType" [0] "float subsurfaceBleed" [0] "float subsurfaceDiffuseBlend" [0] "int subsurfaceResolveSelfIntersections" [0] "float subsurfaceIor" [1.39999998] "float subsurfaceDiffuseSwitch" [1] "int subsurfaceDoubleSided" [0] "int considerBackside" [1] 
+		#		"int continuationRayMode" [0] "int maxContinuationHits" [2] "float followTopology" [0] "string subsurfaceSubset" [""] "int singlescatterDoubleSided" [0] "int singlescatterConsiderBackside" [1] "int singlescatterContinuationRayMode" [0] "int singlescatterMaxContinuationHits" [2] "int singlescatterDirectGainMode" [0] "string singlescatterSubset" [""] "color irradianceTint" [1 1 1] "float irradianceRoughness" [0] "float unitLength" [0.100000001] "int mwWalkable" [0] "float mwIor" [-1] 
+		#		"int thinGlass" [0] "int ignoreFresnel" [0] "int ignoreAccumOpacity" [0] "float g0" [0] "float g1" [0] "int multiScatter" [0] "int enableOverlappingVolumes" [0] "int shadowMode" [0] "int presenceCached" [1] "int mwStartable" [0] "float roughnessMollificationClamp" [32] "color userColor" [0 0 0] "int[1] utilityPattern" [0] "string __materialid" ["dab615d6-debf-11ec-94f1-0242a59e0aa7:pasted__PxrLayerSurface2SG"]
+		#	Pattern "PxrFractal" "pasted__PxrFractal6" "float frequency" [1.08297873] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [7] "float dimension" [0.992907822] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrFractal" "pasted__PxrFractal4" "float frequency" [2.768085] "int mode" [0] "color colorOffset" [0 0 0] "int matchCppPattern" [0] "float lacunarity" [2.54299998] "int surfacePosition" [0] "int noiseType" [0] "int gaborAnisotropy" [0] "vector gaborDirection" [1 0 0] "int layers" [6] "float dimension" [1] 
+		#		"float erosion" [0] "float variation" [0] "int turbulent" [0] "color colorScale" [1 1 1] "float floatScale" [1] "float floatOffset" [0]
+		#	Pattern "PxrVoronoise" "pasted__PxrVoronoise4" "float filter" [1] "float frequency" [1.29999995] "float jitter" [0] "color colorOffset" [0 0 0] "int octaves" [6] "int matchCppPattern" [0] "float lacunarity" [2] "float gain" [0.5] "int surfacePosition" [0] "int turbulent" [0] "color colorScale" [1 1 1] 
+		#		"float floatScale" [1] "float floatOffset" [0] "float smoothness" [1] "int betterContrast" [0] "float smoothnessOffset" [0] "int smoothnessOffsetWrap" [0]
+		#	Pattern "PxrThreshold" "pasted__PxrThreshold2" "int invert" [0] "reference color inputRGB" ["pasted__PxrFractal4:resultRGB"] "float threshold" [0.496732026] "int channel" [3] "float transitionWidth" [0.0898692831] "int transitionProfile" [1]
+		#	Pattern "PxrInvert" "pasted__PxrInvert4" "reference color inputRGB" ["pasted__PxrThreshold2:resultRGB"] "int colorModel" [0] "int invertChannel0" [1] "int invertChannel1" [1] "int invertChannel2" [1]
+		#	Pattern "PxrDispScalarLayer" "pasted__PxrDispScalarLayer1" "float overallAmount" [1] "int baseLayerEnabled" [1] "float baseLayerAmount" [1] "float baseLayerDispScalar" [0] "int layer1Enabled" [1] "float layer1Amount" [0.150000006] "reference float layer1DispScalar" ["pasted__PxrFractal6:resultF"] "reference float layer1Mask" ["pasted__PxrInvert4:resultR"] "int layer1Comp" [1] "int layer2Enabled" [1] "reference float layer2Amount" ["pasted__PxrVoronoise4:resultF"] "float layer2DispScalar" [0.200000003] "reference float layer2Mask" ["pasted__PxrThreshold2:resultR"] "int layer2Comp" [1] "int layer3Enabled" [0] "float layer3Amount" [1] "float layer3DispScalar" [0] 
+		#		"float layer3Mask" [1] "int layer3Comp" [1] "int layer4Enabled" [0] "float layer4Amount" [1] "float layer4DispScalar" [0] "float layer4Mask" [1] "int layer4Comp" [1]
+		#	Displace "PxrDisplace" "pasted__PxrDisplace1" "reference float dispScalar" ["pasted__PxrDispScalarLayer1:resultF"] "vector dispVector" [0 0 0] "int enabled" [0] "float dispAmount" [1] "vector modelDispVector" [0 0 0] "string __materialid" ["dab615d6-debf-11ec-94f1-0242a59e0aa7:pasted__PxrLayerSurface2SG"]
+
+
+			#END OF MAYA NOISE
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0.2 0.8 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			
+			
+			
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.84 0.93 0.84 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+				#TransformBegin
+				#	#Scale 1 0.2 1
+				#	#Translate 0 0.5 0
+
+				#	TransformBegin
+				#		#the swirly cylinder thingy - BASE
+				#		Translate 0 1.4 0
+				#		Rotate -90 1 0 0
+				#		Cylinder 0.85 -0.19 0.25 360
+				#	TransformEnd
+				#TransformEnd
+
+			TransformEnd
+
+		AttributeEnd	
+
+
+
+
+
+		###############################################################################
+
+		## LID
+		#AttributeBegin
+		#	Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+#
+		#	
+#
+		#	TransformBegin
+		#	#general lid control
+		#		Translate 0 0.05 0
+		#		Scale 1 1.15 1
+#
+		#		AttributeBegin
+		#			TransformBegin
+		#				#main body of the lid
+		#				Translate 0 1.35 0
+		#				Rotate -90 1 0 0
+		#				Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+		#				Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+		#				Cylinder 1 -0.1 0.1 360
+		#			TransformEnd
+		#		AttributeEnd
+#
+		#		AttributeBegin
+		#			TransformBegin
+		#				#Disk top
+		#				#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+		#				#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+#
+		#				Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+		#				Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+#
+#
+#
+#
+		#				Translate 0 1.46 0
+		#				Rotate -90 1 0 0 
+		#				
+		#				Disk 0 0.8 360
+		#			TransformEnd
+		#		AttributeEnd	
+		#		
+		#		TransformBegin
+		#			#torus on top
+		#			Translate 0 1.455 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.7
+		#			Torus 0.8 0.1 0 65 360
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			#torus on top
+		#			Translate 0 1.455 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.7
+		#			Torus 0.8 0.1 115 180 360
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			#torus on top
+		#			Translate 0 1.51 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.1
+		#			Torus 0.8 0.1 65 115 360
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			#torus edge top 
+		#			Translate 0 1.45 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.3
+		#			Torus 0.9 0.1 0 90 360
+		#		TransformEnd
+#
+		#		# Bottom torus edge
+#
+		#		TransformBegin
+		#			#Rotate -90 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd	
+#
+		#		TransformBegin
+		#			Rotate -90 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -180 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -270 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd
+#
+#
+		#		#########################################
+		#		# outwards bits
+		#		TransformBegin
+		#			#Rotate -90 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -90 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -180 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -270 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#	TransformEnd	
+		#AttributeEnd	
+		######################################################
+
+		
+
+
+
+
+
+
+	TransformEnd
+
+WorldEnd

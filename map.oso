@@ -1,0 +1,41 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.11.0@OPROJECT_VERSION_RELEASE_TYPE@
+# options: 
+shader map
+param	color	Cin	1 1 1		%read{2147483647,-1} %write{2147483647,-1}
+param	float	s	0		%meta{int,lockgeom,0}  %read{3,9} %write{2147483647,-1} %derivs
+param	float	t	0		%meta{int,lockgeom,0}  %read{0,6} %write{2147483647,-1} %derivs
+oparam	color	Cout	1 1 1		%read{2147483647,-1} %write{12,12}
+const	string	$const1	"lidTopReverse.tx"		%read{12,12} %write{2147483647,-1}
+temp	float	$tmp1	%read{3,3} %write{2,2} %derivs
+temp	float	$tmp2	%read{1,1} %write{0,0} %derivs
+const	float	$const3	2		%read{0,11} %write{2147483647,-1}
+const	float	$const4	3.1400001		%read{1,7} %write{2147483647,-1}
+temp	float	$tmp3	%read{2,2} %write{1,1} %derivs
+temp	float	$tmp4	%read{4,4} %write{3,3} %derivs
+temp	float	$tmp5	%read{5,5} %write{4,4} %derivs
+const	float	$const6	1		%read{4,10} %write{2147483647,-1}
+temp	float	$tmp6	%read{12,12} %write{5,5} %derivs
+temp	float	$tmp7	%read{9,9} %write{8,8} %derivs
+temp	float	$tmp8	%read{7,7} %write{6,6} %derivs
+temp	float	$tmp9	%read{8,8} %write{7,7} %derivs
+temp	float	$tmp10	%read{10,10} %write{9,9} %derivs
+temp	float	$tmp11	%read{11,11} %write{10,10} %derivs
+temp	float	$tmp12	%read{12,12} %write{11,11} %derivs
+code ___main___
+# map.osl:37
+#     Cout=(color)texture("lidTopReverse.tx",((s*(cos(t*2*3.14)))+1)/2, ((s*(sin(t*2*3.14)))+1)/2);
+	mul		$tmp2 t $const3 	%filename{"map.osl"} %line{37} %argrw{"wrr"}
+	mul		$tmp3 $tmp2 $const4 	%argrw{"wrr"}
+	cos		$tmp1 $tmp3 	%argrw{"wr"}
+	mul		$tmp4 s $tmp1 	%argrw{"wrr"}
+	add		$tmp5 $tmp4 $const6 	%argrw{"wrr"}
+	div		$tmp6 $tmp5 $const3 	%argrw{"wrr"}
+	mul		$tmp8 t $const3 	%argrw{"wrr"}
+	mul		$tmp9 $tmp8 $const4 	%argrw{"wrr"}
+	sin		$tmp7 $tmp9 	%argrw{"wr"}
+	mul		$tmp10 s $tmp7 	%argrw{"wrr"}
+	add		$tmp11 $tmp10 $const6 	%argrw{"wrr"}
+	div		$tmp12 $tmp11 $const3 	%argrw{"wrr"}
+	texture		Cout $const1 $tmp6 $tmp12 	%argrw{"wrrr"} %argderivs{2,3}
+	end

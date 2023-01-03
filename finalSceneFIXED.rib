@@ -1,0 +1,3126 @@
+#jar.rib - my first jar try
+Display "finalScenePicture.tiff" "it" "rgba"
+Format 1920 1080 1.0
+Projection "perspective" "uniform float fov" [25]
+
+# HOW TO TRACE SPECULAR DEPTH??????
+Hider "raytrace" "int incremental" [1]
+PixelVariance 0.005
+Integrator "PxrUnified" "integrator"
+###Integrator "PxrVCM" "integrator" #should I rather use PxrVCM???
+#PixelVariance 0.01  IDK WHAT ANY OF IT DOES!!!!
+DepthOfField 1.8 0.500 11
+
+WorldBegin
+	#move everything back 3 units	
+	Translate 0 0 12 #12
+	#Rotate -20 1 0 0 #- to see bottom
+	Rotate -20 0 1 0 #- to see other side
+
+	AttributeBegin
+		TransformBegin
+			Translate 0 20 0
+			Rotate -90 1 0 0
+			Scale -1 1 1
+
+			Light "PxrDomeLight" "theLight" "float exposure" [0] "string lightColorMap" ["myRoom.tx"]
+		TransformEnd
+	AttributeEnd
+
+    #Bxdf "PXRSurface" "tryOne" "color diffuseColor" [ 0.8 0.1 0.1] 
+
+
+	# Table or something
+
+	TransformBegin
+		Rotate -90 1 0 0
+		#Translate -10 -10 -1.5
+        Translate 0 0 -1.5
+		AttributeBegin
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0.8 0.3 0.1]
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [1 1 1]
+
+            Disk 0 20 360
+			#Polygon "P" [0 0 0 
+			#			20 0 0 
+			#			20 20 0 
+			#			0 20 0]
+		AttributeEnd
+	TransformEnd
+
+
+
+	#WHOLE JAR
+	TransformBegin
+	
+
+		#JAR BODY
+		AttributeBegin 
+			#######Bxdf "LamaDielectric" "glassShader" "color reflectionTint" [0 0 1] "int fresnelMode" [1] 
+			Bxdf "PxrSurface" "translucentShader" "int diffuseDoubleSided" [2] "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "int thinGlass" [0]
+			
+			# the normal whole glass
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [0]
+
+			TransformBegin
+				#main body middle
+				Rotate -90 1 0 0
+				Cylinder 1 -1 1 360
+				#Disk -1 1 360
+				
+			TransformEnd
+			
+			#BOTTOM
+
+			TransformBegin
+				#bottom of main body
+				Translate 0 -1 0
+				Rotate 90 1 0 0
+				Torus 0.55 0.45 0 55 360
+			TransformEnd
+
+			TransformBegin
+				#bottom of main body bottom of the bottom
+				Translate 0 -1.32 0
+				Scale 1 0.35 1
+				Rotate 90 1 0 0
+				Torus 0.55 0.3 5 65 360
+			TransformEnd
+
+			TransformBegin
+				#bottom ring
+				Translate 0 -1.4 0
+				Rotate 90 1 0 0
+				Torus 0.65 0.06 0 180 360
+			TransformEnd
+
+			TransformBegin
+				#bottom bottom bottom sphere
+				Translate 0 -1.64 0
+				Scale 1 0.5 1
+				Rotate -90 1 0 0
+				Sphere 0.8 0.5 1 -360
+			TransformEnd
+
+			#TOP
+
+			TransformBegin
+				#round top of main body
+				Translate 0 1 0
+				Rotate -90 1 0 0
+				Torus 0.8 0.2 0 45 360
+			TransformEnd
+			
+
+			TransformBegin
+				#top of main body the indent thingy
+				Translate 0 1.275 0
+				Rotate -90 1 0 0
+				Torus 1 0.15 -115 -180 360
+			TransformEnd
+
+
+
+			TransformBegin
+				#the swirly cylinder thingy - BASE
+				Translate 0 1.4 0
+				Rotate -90 1 0 0
+				Cylinder 0.85 -0.15 0.29 360
+			TransformEnd
+
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.32 0
+				Rotate 90 1 0 0
+				Torus 0.85 0.04 -90 90 360
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				#Rotate 10 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				Rotate 90 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 180 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 270 0 0 10.1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit ends parabololololoid
+				Translate -0.285 1.42 -0.825
+				Rotate -90 1 0 0
+				Rotate 90 0 1 0
+				Rotate -6 0 1 0
+				Rotate -5 1 0 0
+				Paraboloid 0.05 0 0.3 180
+			TransformEnd
+
+			TransformBegin
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.42 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				#Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+			#######################################################################
+			#TORUS inside outside
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.68 0
+				Rotate -90 1 0 0
+				Torus 0.78625 0.06375 0 180 360
+			TransformEnd
+
+			#######################################################################
+
+				
+			# INSIDE JAR GLASS
+
+		
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.85 0.94 0.85 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+
+				TransformBegin
+					#the swirly cylinder thingy - BASE
+					Translate 0 1.4 0
+					Rotate -90 1 0 0
+					Cylinder 0.85 -0.159 0.2958 360
+				TransformEnd
+
+
+			TransformEnd	
+			
+
+
+		AttributeEnd
+
+		###########################################################
+		# OUTSIDE DIRT LAYER
+		AttributeBegin
+			TransformBegin
+				Scale 1.001 1.001 1.001
+
+				Pattern "PxrTexture" "dirtTexture" "string filename" "ColourDirtMap2.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "dirtAlpha" "string filename" "WhiteDirtMap2.tx"
+				Bxdf "PxrSurface" "dirtLayer" "reference color diffuseColor"  ['dirtTexture:resultRGB'] "reference float presence"  ['dirtAlpha:resultR'] 
+				
+				TransformBegin
+					TransformBegin
+						#main body middle
+						Rotate -90 1 0 0
+						Cylinder 1 -1 1 360
+						#Disk -1 1 360
+						
+					TransformEnd
+					
+					#BOTTOM
+
+					TransformBegin
+						#bottom of main body
+						Translate 0 -1 0
+						Rotate 90 1 0 0
+						Torus 0.55 0.45 0 55 360
+					TransformEnd
+
+					TransformBegin
+						#bottom of main body bottom of the bottom
+						Translate 0 -1.32 0
+						Scale 1 0.35 1
+						Rotate 90 1 0 0
+						Torus 0.55 0.3 5 65 360
+					TransformEnd
+
+					TransformBegin
+						#bottom ring
+						Translate 0 -1.4 0
+						Rotate 90 1 0 0
+						Torus 0.65 0.06 0 180 360
+					TransformEnd
+
+					TransformBegin
+						#bottom bottom bottom sphere
+						Translate 0 -1.64 0
+						Scale 1 0.5 1
+						Rotate -90 1 0 0
+						Sphere 0.8 0.5 1 -360
+					TransformEnd
+
+					#TOP
+
+					TransformBegin
+						#round top of main body
+						Translate 0 1 0
+						Rotate -90 1 0 0
+						Torus 0.8 0.2 0 45 360
+					TransformEnd
+					
+
+					TransformBegin
+						#top of main body the indent thingy
+						Translate 0 1.275 0
+						Rotate -90 1 0 0
+						Torus 1 0.15 -115 -180 360
+					TransformEnd
+
+
+
+					TransformBegin
+						#the swirly cylinder thingy - BASE
+						Translate 0 1.4 0
+						Rotate -90 1 0 0
+						Cylinder 0.85 -0.15 0.29 360
+					TransformEnd
+
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.32 0
+						Rotate 90 1 0 0
+						Torus 0.85 0.04 -90 90 360
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						#Rotate 10 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						Rotate 90 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 180 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 270 0 0 10.1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit ends parabololololoid
+						Translate -0.285 1.42 -0.825
+						Rotate -90 1 0 0
+						Rotate 90 0 1 0
+						Rotate -6 0 1 0
+						Rotate -5 1 0 0
+						Paraboloid 0.05 0 0.3 180
+					TransformEnd
+
+					TransformBegin
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.42 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						#Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+					#######################################################################
+					#TORUS inside outside
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.68 0
+						Rotate -90 1 0 0
+						Torus 0.78625 0.06375 0 180 360
+					TransformEnd
+				TransformEnd
+			TransformEnd	
+				
+		AttributeEnd
+
+		###########################################################
+		#LABEL
+
+		TransformBegin
+			Scale 1.001 1.001 1.001
+			Rotate -90 1 0 0
+			AttributeBegin
+				#Bxdf "PxrDiffuse" "diffuseLabel" "color diffuseColor" [0.9 0.9 0.9]
+				#Pattern "PxrManifold2D" "stretchyBit" "float scaleS" [2]
+				Pattern "PxrTexture" "labelTexture" "string filename" "UltramarineLayerStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "labelAlpha" "string filename" "transparencyMap.tx"
+				Bxdf "PxrSurface" "texturedLabel" "reference color diffuseColor"  ['labelTexture:resultRGB'] "reference float presence"  ['labelAlpha:resultR']
+				Cylinder 1 -1 1 200
+			AttributeEnd
+		TransformEnd
+
+		############################################################
+
+		
+		# INSIDE JAR PAINT
+
+		AttributeBegin
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+		
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			
+			
+			
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.84 0.93 0.84 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+				#TransformBegin
+				#	#Scale 1 0.2 1
+				#	#Translate 0 0.5 0
+
+				#	TransformBegin
+				#		#the swirly cylinder thingy - BASE
+				#		Translate 0 1.4 0
+				#		Rotate -90 1 0 0
+				#		Cylinder 0.85 -0.19 0.25 360
+				#	TransformEnd
+				#TransformEnd
+
+			TransformEnd
+
+		AttributeEnd	
+
+
+
+
+
+		###############################################################################
+
+		# LID
+		AttributeBegin
+			Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+
+			
+
+			TransformBegin
+			#general lid control
+				Translate 0 0.05 0
+				Scale 1 1.15 1
+
+				AttributeBegin
+					TransformBegin
+						#main body of the lid
+						Translate 0 1.35 0
+						Rotate -90 1 0 0
+						Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+						Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+						Cylinder 1 -0.1 0.1 360
+					TransformEnd
+				AttributeEnd
+
+				AttributeBegin
+					TransformBegin
+						#Disk top
+						#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+						#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+
+						Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+						Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+
+
+
+
+						Translate 0 1.46 0
+						Rotate -90 1 0 0 
+						
+						Disk 0 0.8 360
+					TransformEnd
+				AttributeEnd	
+				
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 0 65 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 115 180 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.51 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.1
+					Torus 0.8 0.1 65 115 360
+				TransformEnd
+
+				TransformBegin
+					#torus edge top 
+					Translate 0 1.45 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.3
+					Torus 0.9 0.1 0 90 360
+				TransformEnd
+
+				# Bottom torus edge
+
+				TransformBegin
+					#Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd	
+
+				TransformBegin
+					Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+
+				#########################################
+				# outwards bits
+				TransformBegin
+					#Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+			TransformEnd	
+		AttributeEnd	
+		#####################################################
+
+		###############################################################################
+
+		# LID 2
+
+		AttributeBegin
+			Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+
+			
+
+			TransformBegin
+			#general lid control
+				Translate 1.85 -2.86 -1.35
+				Scale 1 1.15 1
+
+				AttributeBegin
+					TransformBegin
+						#main body of the lid
+						Translate 0 1.35 0
+						Rotate -90 1 0 0
+						Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+						Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+						Cylinder 1 -0.1 0.1 360
+					TransformEnd
+				AttributeEnd
+
+				AttributeBegin
+					TransformBegin
+						#Disk top
+						#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+						#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+
+						Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+						Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+
+
+
+
+						Translate 0 1.46 0
+						Rotate -90 1 0 0 
+						
+						Disk 0 0.8 360
+					TransformEnd
+				AttributeEnd	
+				
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 0 65 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 115 180 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.51 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.1
+					Torus 0.8 0.1 65 115 360
+				TransformEnd
+
+				TransformBegin
+					#torus edge top 
+					Translate 0 1.45 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.3
+					Torus 0.9 0.1 0 90 360
+				TransformEnd
+
+				# Bottom torus edge
+
+				TransformBegin
+					#Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd	
+
+				TransformBegin
+					Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+
+				#########################################
+				# outwards bits
+				TransformBegin
+					#Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+			TransformEnd	
+		AttributeEnd	
+		#####################################################
+
+
+
+
+
+
+
+	TransformEnd
+
+    # JAR 2
+
+	TransformBegin
+        Translate -2 0 -0.6
+        Rotate 90 0 1 0
+
+		#JAR BODY
+		AttributeBegin 
+			#######Bxdf "LamaDielectric" "glassShader" "color reflectionTint" [0 0 1] "int fresnelMode" [1] 
+			Bxdf "PxrSurface" "translucentShader" "int diffuseDoubleSided" [2] "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "int thinGlass" [0]
+			
+			# the normal whole glass
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [0]
+			# try PAINT
+
+
+
+			# end of try Paint
+
+			TransformBegin
+				#main body middle
+				Rotate -90 1 0 0
+				Cylinder 1 -1 1 360
+				#Disk -1 1 360
+				
+			TransformEnd
+			
+			#BOTTOM
+
+			TransformBegin
+				#bottom of main body
+				Translate 0 -1 0
+				Rotate 90 1 0 0
+				Torus 0.55 0.45 0 55 360
+			TransformEnd
+
+			TransformBegin
+				#bottom of main body bottom of the bottom
+				Translate 0 -1.32 0
+				Scale 1 0.35 1
+				Rotate 90 1 0 0
+				Torus 0.55 0.3 5 65 360
+			TransformEnd
+
+			TransformBegin
+				#bottom ring
+				Translate 0 -1.4 0
+				Rotate 90 1 0 0
+				Torus 0.65 0.06 0 180 360
+			TransformEnd
+
+			TransformBegin
+				#bottom bottom bottom sphere
+				Translate 0 -1.64 0
+				Scale 1 0.5 1
+				Rotate -90 1 0 0
+				Sphere 0.8 0.5 1 -360
+			TransformEnd
+
+			#TOP
+
+			TransformBegin
+				#round top of main body
+				Translate 0 1 0
+				Rotate -90 1 0 0
+				Torus 0.8 0.2 0 45 360
+			TransformEnd
+			
+
+			TransformBegin
+				#top of main body the indent thingy
+				Translate 0 1.275 0
+				Rotate -90 1 0 0
+				Torus 1 0.15 -115 -180 360
+			TransformEnd
+
+
+
+			TransformBegin
+				#the swirly cylinder thingy - BASE
+				Translate 0 1.4 0
+				Rotate -90 1 0 0
+				Cylinder 0.85 -0.15 0.29 360
+			TransformEnd
+
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.32 0
+				Rotate 90 1 0 0
+				Torus 0.85 0.04 -90 90 360
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				#Rotate 10 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				Rotate 90 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 180 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 270 0 0 10.1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit ends parabololololoid
+				Translate -0.285 1.42 -0.825
+				Rotate -90 1 0 0
+				Rotate 90 0 1 0
+				Rotate -6 0 1 0
+				Rotate -5 1 0 0
+				Paraboloid 0.05 0 0.3 180
+			TransformEnd
+
+			TransformBegin
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.42 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				#Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+			#######################################################################
+			#TORUS inside outside
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.68 0
+				Rotate -90 1 0 0
+				Torus 0.78625 0.06375 0 180 360
+			TransformEnd
+
+			#######################################################################
+
+				
+			# INSIDE JAR GLASS
+
+		
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.85 0.94 0.85 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+
+				TransformBegin
+					#the swirly cylinder thingy - BASE
+					Translate 0 1.4 0
+					Rotate -90 1 0 0
+					Cylinder 0.85 -0.159 0.2958 360
+				TransformEnd
+
+
+			TransformEnd	
+			
+
+
+		AttributeEnd
+
+		###########################################################
+		# OUTSIDE DIRT LAYER
+		AttributeBegin
+			TransformBegin
+				Scale 1.001 1.001 1.001
+
+				Pattern "PxrTexture" "dirtTexture2" "string filename" "ColourMapDirt.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "dirtAlpha2" "string filename" "WhiteMapDirt.tx"
+				Bxdf "PxrSurface" "dirtLayer2" "reference color diffuseColor"  ['dirtTexture2:resultRGB'] "reference float presence"  ['dirtAlpha2:resultR'] 
+				
+				TransformBegin
+					TransformBegin
+						#main body middle
+						Rotate -90 1 0 0
+						Cylinder 1 -1 1 360
+						#Disk -1 1 360
+						
+					TransformEnd
+					
+					#BOTTOM
+
+					TransformBegin
+						#bottom of main body
+						Translate 0 -1 0
+						Rotate 90 1 0 0
+						Torus 0.55 0.45 0 55 360
+					TransformEnd
+
+					TransformBegin
+						#bottom of main body bottom of the bottom
+						Translate 0 -1.32 0
+						Scale 1 0.35 1
+						Rotate 90 1 0 0
+						Torus 0.55 0.3 5 65 360
+					TransformEnd
+
+					TransformBegin
+						#bottom ring
+						Translate 0 -1.4 0
+						Rotate 90 1 0 0
+						Torus 0.65 0.06 0 180 360
+					TransformEnd
+
+					TransformBegin
+						#bottom bottom bottom sphere
+						Translate 0 -1.64 0
+						Scale 1 0.5 1
+						Rotate -90 1 0 0
+						Sphere 0.8 0.5 1 -360
+					TransformEnd
+
+					#TOP
+
+					TransformBegin
+						#round top of main body
+						Translate 0 1 0
+						Rotate -90 1 0 0
+						Torus 0.8 0.2 0 45 360
+					TransformEnd
+					
+
+					TransformBegin
+						#top of main body the indent thingy
+						Translate 0 1.275 0
+						Rotate -90 1 0 0
+						Torus 1 0.15 -115 -180 360
+					TransformEnd
+
+
+
+					TransformBegin
+						#the swirly cylinder thingy - BASE
+						Translate 0 1.4 0
+						Rotate -90 1 0 0
+						Cylinder 0.85 -0.15 0.29 360
+					TransformEnd
+
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.32 0
+						Rotate 90 1 0 0
+						Torus 0.85 0.04 -90 90 360
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						#Rotate 10 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						Rotate 90 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 180 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 270 0 0 10.1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit ends parabololololoid
+						Translate -0.285 1.42 -0.825
+						Rotate -90 1 0 0
+						Rotate 90 0 1 0
+						Rotate -6 0 1 0
+						Rotate -5 1 0 0
+						Paraboloid 0.05 0 0.3 180
+					TransformEnd
+
+					TransformBegin
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.42 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						#Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+					#######################################################################
+					#TORUS inside outside
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.68 0
+						Rotate -90 1 0 0
+						Torus 0.78625 0.06375 0 180 360
+					TransformEnd
+				TransformEnd
+			TransformEnd	
+				
+		AttributeEnd
+
+		###########################################################
+		#LABEL
+
+		TransformBegin
+			Scale 1.001 1.001 1.001
+			Rotate -90 1 0 0
+			AttributeBegin
+				#Bxdf "PxrDiffuse" "diffuseLabel" "color diffuseColor" [0.9 0.9 0.9]
+				#Pattern "PxrManifold2D" "stretchyBit" "float scaleS" [2]
+				Pattern "PxrTexture" "labelTexture" "string filename" "UltramarineLayerStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "labelAlpha" "string filename" "transparencyMap.tx"
+				Bxdf "PxrSurface" "texturedLabel" "reference color diffuseColor"  ['labelTexture:resultRGB'] "reference float presence"  ['labelAlpha:resultR']
+				Cylinder 1 -1 1 200
+			AttributeEnd
+		TransformEnd
+
+		############################################################
+
+		
+		# INSIDE JAR PAINT
+
+		AttributeBegin
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			
+			
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [1 0 0.9] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			
+			
+			
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.84 0.93 0.84 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+				#TransformBegin
+				#	#Scale 1 0.2 1
+				#	#Translate 0 0.5 0
+
+				#	TransformBegin
+				#		#the swirly cylinder thingy - BASE
+				#		Translate 0 1.4 0
+				#		Rotate -90 1 0 0
+				#		Cylinder 0.85 -0.19 0.25 360
+				#	TransformEnd
+				#TransformEnd
+
+			TransformEnd
+
+		AttributeEnd	
+
+
+
+
+
+		###############################################################################
+
+		# LID
+		AttributeBegin
+			Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+
+			
+
+			TransformBegin
+			#general lid control
+				Translate 0 0.05 0
+				Scale 1 1.15 1
+
+				AttributeBegin
+					TransformBegin
+						#main body of the lid
+						Translate 0 1.35 0
+						Rotate -90 1 0 0
+						Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+						Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+						Cylinder 1 -0.1 0.1 360
+					TransformEnd
+				AttributeEnd
+
+				AttributeBegin
+					TransformBegin
+						#Disk top
+						#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+						#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+
+						Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+						Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+
+
+
+
+						Translate 0 1.46 0
+						Rotate -90 1 0 0 
+						
+						Disk 0 0.8 360
+					TransformEnd
+				AttributeEnd	
+				
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 0 65 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.455 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.7
+					Torus 0.8 0.1 115 180 360
+				TransformEnd
+
+				TransformBegin
+					#torus on top
+					Translate 0 1.51 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.1
+					Torus 0.8 0.1 65 115 360
+				TransformEnd
+
+				TransformBegin
+					#torus edge top 
+					Translate 0 1.45 0
+					Rotate -90 1 0 0 
+					Scale 1 1 0.3
+					Torus 0.9 0.1 0 90 360
+				TransformEnd
+
+				# Bottom torus edge
+
+				TransformBegin
+					#Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd	
+
+				TransformBegin
+					Rotate -90 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0
+						TransformBegin
+							#torus edge bottom
+							Translate 0 1.25 0
+							Rotate 90 1 0 0 
+							#Scale 1 1 0.3
+							Torus 0.97 0.03 0 250 70
+						TransformEnd
+				TransformEnd
+
+
+				#########################################
+				# outwards bits
+				TransformBegin
+					#Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -90 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -180 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+				TransformBegin
+					Rotate -270 0 1 0 
+					
+					#outwards bit
+					TransformBegin
+						#cylinder base bit
+						Rotate -250 0 1 0
+							TransformBegin
+								#torus edge bottom
+								Translate 0 1.25 0
+								Rotate 90 1 0 0 
+								
+								Torus 0.97 0.03 0 190 20
+							
+							TransformEnd
+					TransformEnd
+
+
+					#TO FIX OUTWARDS BITS!!!!!
+					
+					TransformBegin
+						#outwards sphere bit
+						Translate -0.6 1.245 -0.7
+						Translate 0.45 0 -0.22
+						Rotate -18 1 0 0 #no
+						Rotate 13 0 1 0
+						Rotate 5 0 0 1 #no
+						Scale 1.1 0.2 0.3
+						Sphere 0.2 -1 1 360
+					TransformEnd
+
+
+				TransformEnd
+
+			TransformEnd	
+		AttributeEnd	
+		#####################################################
+
+
+	TransformEnd
+   
+   
+    # Jar 3
+    
+	TransformBegin
+        Translate 2 0 0.6
+        Rotate -125 0 1 0
+
+		#JAR BODY
+		AttributeBegin 
+			#######Bxdf "LamaDielectric" "glassShader" "color reflectionTint" [0 0 1] "int fresnelMode" [1] 
+			Bxdf "PxrSurface" "translucentShader" "int diffuseDoubleSided" [2] "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "int thinGlass" [0]
+			
+			# the normal whole glass
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [0]
+			# try PAINT
+
+			
+
+			# end of try Paint
+
+			TransformBegin
+				#main body middle
+				Rotate -90 1 0 0
+				Cylinder 1 -1 1 360
+				#Disk -1 1 360
+				
+			TransformEnd
+			
+			#BOTTOM
+
+			TransformBegin
+				#bottom of main body
+				Translate 0 -1 0
+				Rotate 90 1 0 0
+				Torus 0.55 0.45 0 55 360
+			TransformEnd
+
+			TransformBegin
+				#bottom of main body bottom of the bottom
+				Translate 0 -1.32 0
+				Scale 1 0.35 1
+				Rotate 90 1 0 0
+				Torus 0.55 0.3 5 65 360
+			TransformEnd
+
+			TransformBegin
+				#bottom ring
+				Translate 0 -1.4 0
+				Rotate 90 1 0 0
+				Torus 0.65 0.06 0 180 360
+			TransformEnd
+
+			TransformBegin
+				#bottom bottom bottom sphere
+				Translate 0 -1.64 0
+				Scale 1 0.5 1
+				Rotate -90 1 0 0
+				Sphere 0.8 0.5 1 -360
+			TransformEnd
+
+			#TOP
+
+			TransformBegin
+				#round top of main body
+				Translate 0 1 0
+				Rotate -90 1 0 0
+				Torus 0.8 0.2 0 45 360
+			TransformEnd
+			
+
+			TransformBegin
+				#top of main body the indent thingy
+				Translate 0 1.275 0
+				Rotate -90 1 0 0
+				Torus 1 0.15 -115 -180 360
+			TransformEnd
+
+
+
+			TransformBegin
+				#the swirly cylinder thingy - BASE
+				Translate 0 1.4 0
+				Rotate -90 1 0 0
+				Cylinder 0.85 -0.15 0.29 360
+			TransformEnd
+
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.32 0
+				Rotate 90 1 0 0
+				Torus 0.85 0.04 -90 90 360
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				#Rotate 10 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate -6 0 1 0
+				Rotate 90 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.55 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 180 0 0 1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit
+				Translate 0 1.45 0
+				Rotate 90 1 0 0
+				Rotate 6 0 1 0
+				Rotate 270 0 0 10.1
+				Torus 0.85 0.05 -90 90 60
+			TransformEnd
+
+			TransformBegin
+				# the swirly tilted bit ends parabololololoid
+				Translate -0.285 1.42 -0.825
+				Rotate -90 1 0 0
+				Rotate 90 0 1 0
+				Rotate -6 0 1 0
+				Rotate -5 1 0 0
+				Paraboloid 0.05 0 0.3 180
+			TransformEnd
+
+			TransformBegin
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.42 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid
+					Translate -0.285 1.43 -0.825
+					Rotate -90 1 0 0
+					Rotate 90 0 1 0
+					Rotate -6 0 1 0
+					Rotate -5 1 0 0
+					Paraboloid 0.05 0 0.3 180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				#Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -90 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -180 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.55 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+
+			TransformBegin
+				#Rotate 0 0 1 0
+				Rotate -270 0 1 0
+				TransformBegin
+					# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+					Translate 0.85 1.525 -0.185
+					Rotate 25 0 1 0 # into jar angle
+					Rotate -5 1 0 0 #tilt 
+					Rotate -90 0 0 1 # rotate concave convex
+					Paraboloid -0.05 0 -0.3 -180
+				TransformEnd
+			TransformEnd
+			#######################################################################
+			#TORUS inside outside
+
+			TransformBegin
+				# the swirly straight ring bit
+				Translate 0 1.68 0
+				Rotate -90 1 0 0
+				Torus 0.78625 0.06375 0 180 360
+			TransformEnd
+
+			#######################################################################
+
+				
+			# INSIDE JAR GLASS
+
+		
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			#Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0 0 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.85 0.94 0.85 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+
+				TransformBegin
+					#the swirly cylinder thingy - BASE
+					Translate 0 1.4 0
+					Rotate -90 1 0 0
+					Cylinder 0.85 -0.159 0.2958 360
+				TransformEnd
+
+
+			TransformEnd	
+			
+
+
+		AttributeEnd
+
+		###########################################################
+		# OUTSIDE DIRT LAYER
+		AttributeBegin
+			TransformBegin
+				Scale 1.001 1.001 1.001
+
+				Pattern "PxrTexture" "dirtTexture" "string filename" "ColourDirtMap2.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "dirtAlpha" "string filename" "WhiteDirtMap2.tx"
+				Bxdf "PxrSurface" "dirtLayer" "reference color diffuseColor"  ['dirtTexture:resultRGB'] "reference float presence"  ['dirtAlpha:resultR'] 
+				
+				TransformBegin
+					TransformBegin
+						#main body middle
+						Rotate -90 1 0 0
+						Cylinder 1 -1 1 360
+						#Disk -1 1 360
+						
+					TransformEnd
+					
+					#BOTTOM
+
+					TransformBegin
+						#bottom of main body
+						Translate 0 -1 0
+						Rotate 90 1 0 0
+						Torus 0.55 0.45 0 55 360
+					TransformEnd
+
+					TransformBegin
+						#bottom of main body bottom of the bottom
+						Translate 0 -1.32 0
+						Scale 1 0.35 1
+						Rotate 90 1 0 0
+						Torus 0.55 0.3 5 65 360
+					TransformEnd
+
+					TransformBegin
+						#bottom ring
+						Translate 0 -1.4 0
+						Rotate 90 1 0 0
+						Torus 0.65 0.06 0 180 360
+					TransformEnd
+
+					TransformBegin
+						#bottom bottom bottom sphere
+						Translate 0 -1.64 0
+						Scale 1 0.5 1
+						Rotate -90 1 0 0
+						Sphere 0.8 0.5 1 -360
+					TransformEnd
+
+					#TOP
+
+					TransformBegin
+						#round top of main body
+						Translate 0 1 0
+						Rotate -90 1 0 0
+						Torus 0.8 0.2 0 45 360
+					TransformEnd
+					
+
+					TransformBegin
+						#top of main body the indent thingy
+						Translate 0 1.275 0
+						Rotate -90 1 0 0
+						Torus 1 0.15 -115 -180 360
+					TransformEnd
+
+
+
+					TransformBegin
+						#the swirly cylinder thingy - BASE
+						Translate 0 1.4 0
+						Rotate -90 1 0 0
+						Cylinder 0.85 -0.15 0.29 360
+					TransformEnd
+
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.32 0
+						Rotate 90 1 0 0
+						Torus 0.85 0.04 -90 90 360
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						#Rotate 10 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate -6 0 1 0
+						Rotate 90 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.55 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 180 0 0 1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit
+						Translate 0 1.45 0
+						Rotate 90 1 0 0
+						Rotate 6 0 1 0
+						Rotate 270 0 0 10.1
+						Torus 0.85 0.05 -90 90 60
+					TransformEnd
+
+					TransformBegin
+						# the swirly tilted bit ends parabololololoid
+						Translate -0.285 1.42 -0.825
+						Rotate -90 1 0 0
+						Rotate 90 0 1 0
+						Rotate -6 0 1 0
+						Rotate -5 1 0 0
+						Paraboloid 0.05 0 0.3 180
+					TransformEnd
+
+					TransformBegin
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.42 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid
+							Translate -0.285 1.43 -0.825
+							Rotate -90 1 0 0
+							Rotate 90 0 1 0
+							Rotate -6 0 1 0
+							Rotate -5 1 0 0
+							Paraboloid 0.05 0 0.3 180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						#Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -90 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -180 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.55 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+
+					TransformBegin
+						#Rotate 0 0 1 0
+						Rotate -270 0 1 0
+						TransformBegin
+							# the swirly tilted bit ends parabololololoid TOP TO DOOOOOO
+							Translate 0.85 1.525 -0.185
+							Rotate 25 0 1 0 # into jar angle
+							Rotate -5 1 0 0 #tilt 
+							Rotate -90 0 0 1 # rotate concave convex
+							Paraboloid -0.05 0 -0.3 -180
+						TransformEnd
+					TransformEnd
+					#######################################################################
+					#TORUS inside outside
+
+					TransformBegin
+						# the swirly straight ring bit
+						Translate 0 1.68 0
+						Rotate -90 1 0 0
+						Torus 0.78625 0.06375 0 180 360
+					TransformEnd
+				TransformEnd
+			TransformEnd	
+				
+		AttributeEnd
+
+		###########################################################
+		#LABEL
+
+		TransformBegin
+			Scale 1.001 1.001 1.001
+			Rotate -90 1 0 0
+			AttributeBegin
+				#Bxdf "PxrDiffuse" "diffuseLabel" "color diffuseColor" [0.9 0.9 0.9]
+				#Pattern "PxrManifold2D" "stretchyBit" "float scaleS" [2]
+				Pattern "PxrTexture" "labelTexture" "string filename" "UltramarineLayerStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+				Pattern "PxrTexture" "labelAlpha" "string filename" "transparencyMap.tx"
+				Bxdf "PxrSurface" "texturedLabel" "reference color diffuseColor"  ['labelTexture:resultRGB'] "reference float presence"  ['labelAlpha:resultR']
+				Cylinder 1 -1 1 200
+			AttributeEnd
+		TransformEnd
+
+		############################################################
+
+		
+		# INSIDE JAR PAINT
+
+		AttributeBegin
+			#Bxdf "PxrLayerSurface" "glass"  "float diffuseGain"  [0.0] "float refractionGain"  [1.0] "float reflectionGain"  [1.0] "color refractionColor"  [1 1 1] "float glassRoughness"  [0.0] "float glassAnisotropy"  [0.0] "int thinGlass" [1]
+			
+			Bxdf "PxrSurface" "diffuseOnside" "color diffuseColor" [0.2 0.8 1] "int diffuseDoubleSided" [2] #"sides" "int doubleshaded" [2]
+			
+			
+			
+			TransformBegin
+				Translate 0 1.655 0 #translate up
+				Scale 0.84 0.93 0.84 #scale
+				Translate 0 -1.655 0 #translate down
+
+				TransformBegin
+					#main body middle
+					Rotate -90 1 0 0
+					Cylinder 1 -1 1 360
+					#Disk -1 1 360
+				TransformEnd
+				
+				#BOTTOM
+
+				TransformBegin
+					#bottom of main body
+					Translate 0 -1 0
+					Rotate 90 1 0 0
+					Torus 0.55 0.45 0 55 360
+				TransformEnd
+
+				TransformBegin
+					#bottom of main body bottom of the bottom
+					Translate 0 -1.32 0
+					Scale 1 0.35 1
+					Rotate 90 1 0 0
+					Torus 0.55 0.3 5 65 360
+				TransformEnd
+
+				TransformBegin
+					#bottom ring
+					Translate 0 -1.4 0
+					Rotate 90 1 0 0
+					Torus 0.65 0.06 0 180 360
+				TransformEnd
+
+				TransformBegin
+					#bottom bottom bottom sphere
+					Translate 0 -1.64 0
+					Scale 1 0.5 1
+					Rotate -90 1 0 0
+					Sphere 0.8 0.5 1 360
+				TransformEnd
+
+				#TOP
+
+				TransformBegin
+					#round top of main body
+					Translate 0 1 0
+					Rotate -90 1 0 0
+					Torus 0.8 0.2 0 45 360
+				TransformEnd
+				
+
+				TransformBegin
+					#top of main body the indent thingy
+					Translate 0 1.275 0
+					Rotate -90 1 0 0
+					Torus 1 0.15 -115 -180 360
+				TransformEnd
+
+
+				#TransformBegin
+				#	#Scale 1 0.2 1
+				#	#Translate 0 0.5 0
+
+				#	TransformBegin
+				#		#the swirly cylinder thingy - BASE
+				#		Translate 0 1.4 0
+				#		Rotate -90 1 0 0
+				#		Cylinder 0.85 -0.19 0.25 360
+				#	TransformEnd
+				#TransformEnd
+
+			TransformEnd
+
+		AttributeEnd	
+
+
+
+
+
+		###############################################################################
+
+		## LID
+		#AttributeBegin
+		#	Bxdf "PxrSurface" "diffuseLid" "int diffuseDoubleSided" [2] "float diffuseGain"  [1.0] "color diffuseColor" [0.5 0.5 0.5] "float reflectionGain"  [0.65]
+#
+		#	
+#
+		#	TransformBegin
+		#	#general lid control
+		#		Translate 0 0.05 0
+		#		Scale 1 1.15 1
+#
+		#		AttributeBegin
+		#			TransformBegin
+		#				#main body of the lid
+		#				Translate 0 1.35 0
+		#				Rotate -90 1 0 0
+		#				Pattern "PxrTexture" "lidTextureWrap" "string filename" "RepetitiveLidStretch.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] "int linearize" [1]
+		#				Bxdf "PxrSurface" "lidLabel" "int diffuseDoubleSided" [2] "reference color diffuseColor"  ['lidTextureWrap:resultRGB']
+		#				Cylinder 1 -0.1 0.1 360
+		#			TransformEnd
+		#		AttributeEnd
+#
+		#		AttributeBegin
+		#			TransformBegin
+		#				#Disk top
+		#				#Pattern "PxrTexture" "lidTextureTop" "string filename" "lidTopReverse.tx" "int linearize" [1] #"reference struct manifold" ['stretchyBit']#"PxrManifold2D""float scaleS" [2] 
+		#				#Bxdf "PxrSurface" "lidTopLabel" "reference color diffuseColor"  ['lidTextureTop:resultRGB']
+#
+		#				Pattern "map" "myShader" "color Cin" [1 1 1] "int linearize" [1]
+		#				Bxdf "PxrSurface" "forTheJarLid" "int diffuseDoubleSided" [2] "reference color diffuseColor" ["myShader:Cout"]
+#
+#
+#
+#
+		#				Translate 0 1.46 0
+		#				Rotate -90 1 0 0 
+		#				
+		#				Disk 0 0.8 360
+		#			TransformEnd
+		#		AttributeEnd	
+		#		
+		#		TransformBegin
+		#			#torus on top
+		#			Translate 0 1.455 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.7
+		#			Torus 0.8 0.1 0 65 360
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			#torus on top
+		#			Translate 0 1.455 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.7
+		#			Torus 0.8 0.1 115 180 360
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			#torus on top
+		#			Translate 0 1.51 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.1
+		#			Torus 0.8 0.1 65 115 360
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			#torus edge top 
+		#			Translate 0 1.45 0
+		#			Rotate -90 1 0 0 
+		#			Scale 1 1 0.3
+		#			Torus 0.9 0.1 0 90 360
+		#		TransformEnd
+#
+		#		# Bottom torus edge
+#
+		#		TransformBegin
+		#			#Rotate -90 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd	
+#
+		#		TransformBegin
+		#			Rotate -90 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -180 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -270 0 1 0
+		#				TransformBegin
+		#					#torus edge bottom
+		#					Translate 0 1.25 0
+		#					Rotate 90 1 0 0 
+		#					#Scale 1 1 0.3
+		#					Torus 0.97 0.03 0 250 70
+		#				TransformEnd
+		#		TransformEnd
+#
+#
+		#		#########################################
+		#		# outwards bits
+		#		TransformBegin
+		#			#Rotate -90 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -90 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -180 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#		TransformBegin
+		#			Rotate -270 0 1 0 
+		#			
+		#			#outwards bit
+		#			TransformBegin
+		#				#cylinder base bit
+		#				Rotate -250 0 1 0
+		#					TransformBegin
+		#						#torus edge bottom
+		#						Translate 0 1.25 0
+		#						Rotate 90 1 0 0 
+		#						
+		#						Torus 0.97 0.03 0 190 20
+		#					
+		#					TransformEnd
+		#			TransformEnd
+#
+#
+		#			#TO FIX OUTWARDS BITS!!!!!
+		#			
+		#			TransformBegin
+		#				#outwards sphere bit
+		#				Translate -0.6 1.245 -0.7
+		#				Translate 0.45 0 -0.22
+		#				Rotate -18 1 0 0 #no
+		#				Rotate 13 0 1 0
+		#				Rotate 5 0 0 1 #no
+		#				Scale 1.1 0.2 0.3
+		#				Sphere 0.2 -1 1 360
+		#			TransformEnd
+#
+#
+		#		TransformEnd
+#
+		#	TransformEnd	
+		#AttributeEnd	
+		######################################################
+
+		
+
+
+
+
+
+
+	TransformEnd
+
+WorldEnd

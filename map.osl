@@ -1,0 +1,39 @@
+//void polar2D(output float x, 
+//			output float y,
+//			float theta, 
+//			float r)
+//
+//{
+//float  theta=v*2*P		
+//		x=r*cos(theta);
+//		y=r*sin(theta);
+//		x=(x+1)/2
+//		y=(y+1/2)
+//		
+//}
+//
+//
+//
+//
+//
+//shader map (
+//	color Cin=1,
+//	output	color Cout=1
+//)
+//{
+//	
+//    Cout=(color)texture("lidTopReverse.tx",x*2,y);
+//}
+
+
+
+shader map (
+	color Cin=1, 
+	float s=0 [[int lockgeom = 0]],
+	float t=0 [[int lockgeom = 0]],
+	output	color Cout=1)
+
+{
+    Cout=(color)texture("lidTopReverse.tx",((s*(cos(t*2*3.14)))+1)/2, ((s*(sin(t*2*3.14)))+1)/2);
+}
+
